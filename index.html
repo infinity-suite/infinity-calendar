@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Infinity Kalender V47</title>
+    <style>
+        :root {
+            --bg-black: #000000;
+            --sidebar-gray: #3d3d3d;
+            --row-light: #e1fbc4;
+            --row-dark: #c9efaa;
+            --today-yellow: #fff176;
+            --text-main: #1b5e20;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            background: var(--bg-black);
+            font-family: -apple-system, sans-serif;
+            overflow: hidden;
+        }
+
+        .calendar-scroll {
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .month-section {
+            display: flex;
+            background: var(--bg-black);
+            border-bottom: 6px solid var(--bg-black);
+        }
+
+        .month-rail {
+            width: 45px;
+            background: var(--sidebar-gray);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 30px;
+        }
+
+        .month-label {
+            color: #ffffff;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .days-container { flex: 1; background: var(--bg-black); }
+
+        .week-separator {
+            height: 5px;
+            background: var(--bg-black);
+            width: 100%;
+        }
+
+        .day-row {
+            display: flex;
+            min-height: 50px;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            background: var(--row-light);
+            align-items: flex-start;
+        }
+
+        .day-row:nth-child(even) { background: var(--row-dark); }
+        .day-row.today { background: var(--today-yellow) !important; }
+
+        .date-col { 
+            width: 80px; 
+            color: var(--text-main); 
+            flex-shrink: 0; 
+            display: flex; 
+            align-items: baseline; 
+            gap: 5px;
+        }
+        
+        .date-number, .date-day { 
+            font-weight: 400; 
+            font-size: 1.05rem; 
+            line-height: 1.4; 
+        }
+
+        /* Styling für Samstag und Sonntag (Zahl und Text) */
+        .we .date-number, .we .date-day { 
+            font-style: italic; 
+            opacity: 0.45; 
+        }
+
+        .event-col { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 4px; 
+            justify-content: flex-start;
+        }
+        
+        .event-item { 
+            color: #000; 
+            cursor: pointer; 
+            line-height: 1.4;
+            font-size: 1.05rem;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .f-btn {
+    position: fixed; 
+    width: 65px; 
+    height: 65px; 
+    border-radius: 50%; /* Hier von 22px auf 50% ändern */
+background: rgba(46, 125, 50, 0.7);
+    color: white; 
+    border: none;
+    font-weight: bold; 
+    z-index: 100; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+/* Sorgt dafür, dass alles hinter dem Button leicht verschwimmt (Edel-Look) */
+    backdrop-filter: blur(4px); 
+    -webkit-backdrop-filter: blur(4px);
+}
+        .b-today { bottom: 25px; left: 20px; }
+        .b-back { bottom: 25px; right: 20px; }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        .m-box {
+            background: #fff; padding: 25px; border-radius: 25px; width: 92%; max-width: 400px; 
+            box-sizing: border-box; max-height: 90vh; overflow-y: auto;
+        }
+        .btn-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .btn-grid button { height: 48px; flex: 1 1 45%; border: none; border-radius: 12px; font-weight: bold; font-size: 0.95rem; }
+        .btn-grid .full { flex: 1 1 100% !important; }
+        .btn-gray { background: #f2f2f2; color: #444; }
+        .btn-red { background: #ffebee; color: #c62828; }
+        .btn-green { background: #2e7d32; color: white; }
+
+        input, select, textarea { 
+            width: 100%; padding: 12px; margin: 5px 0; border-radius: 10px; 
+            border: 1px solid #ddd; background: #fff; box-sizing: border-box; font-size: 1rem; 
+        }
+        
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 15px 0;
+            padding: 5px 0;
+            cursor: pointer;
+        }
+        .check-row input { width: 22px; height: 22px; margin: 0; cursor: pointer; }
+        .check-row span { font-size: 1rem; color: #333; font-weight: 500; }
+
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+<div class="calendar-scroll" id="scroller"></div>
+
+<button class="f-btn b-today" onclick="jumpToday()">Heute</button>
+<button class="f-btn b-back" onclick="openBackup()">Daten</button>
+
+<div id="m-event" class="modal">
+    <div class="m-box">
+        <h3 id="m-title" style="margin-top:0;">Termin</h3>
+        <input type="text" id="m-text" placeholder="Titel eingeben">
+        
+        <div class="check-row" id="toggle-trigger">
+            <input type="checkbox" id="m-all">
+            <span>Ganztägig</span>
+        </div>
+        
+        <div style="display:flex; gap:8px;">
+            <div style="flex:1;">
+                <label style="font-size: 0.7rem; color: #999;">Start</label>
+                <input type="date" id="m-start-date">
+                <div id="m-time-start-wrap"><input type="time" id="m-time-start"></div>
+            </div>
+            <div style="flex:1;">
+                <label style="font-size: 0.7rem; color: #999;">Ende</label>
+                <input type="date" id="m-end-date">
+                <div id="m-time-end-wrap"><input type="time" id="m-time-end"></div>
+            </div>
+        </div>
+
+        <label style="font-size: 0.7rem; color: #999; margin-top:10px; display:block;">Wiederholung</label>
+        <select id="m-rep">
+            <option value="none">Einmalig</option>
+            <option value="daily">Täglich</option>
+            <option value="weekly">Wöchentlich</option>
+            <option value="monthly">Monatlich</option>
+            <option value="yearly">Jährlich</option>
+        </select>
+        
+        <div class="btn-grid">
+            <button class="btn-green" onclick="save()">Speichern</button>
+            <button id="m-del" class="btn-red" style="display:none" onclick="showDeleteOptions()">Löschen</button>
+            <button class="btn-gray full" onclick="closePop()">Abbrechen</button>
+        </div>
+    </div>
+</div>
+
+<div id="m-del-confirm" class="modal"><div class="m-box"><h3>Löschen</h3><p>Serie oder nur diesen Tag?</p><div class="btn-grid"><button class="btn-red" onclick="delSingle()">Nur diesen</button><button class="btn-red" onclick="delSerie()">Ganze Serie</button><button class="btn-gray full" onclick="hideDeleteOptions()">Abbrechen</button></div></div></div>
+
+<div id="m-backup" class="modal">
+    <div class="m-box">
+        <h3 style="margin-top:0;">Backup</h3>
+        <textarea id="b-export" readonly style="height:50px; font-size: 0.7rem; color: #888; background: #f9f9f9;"></textarea>
+        <div class="btn-grid"><button class="btn-gray full" onclick="copyB()">Code Kopieren</button></div>
+        <hr>
+        <textarea id="b-import" style="height:50px;" placeholder="Code hier einfügen..."></textarea>
+        <div class="btn-grid">
+            <button class="btn-green" onclick="importB()">Importieren</button>
+            <button class="btn-gray" onclick="downloadB()">Download</button>
+            <button class="btn-red" onclick="clearAllData()">Reset</button>
+            <button class="btn-gray full" onclick="closePop()">Schließen</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'inf_v47';
+    const EX_KEY = 'inf_v47_ex';
+
+    let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    let exceptions = JSON.parse(localStorage.getItem(EX_KEY)) || []; 
+    let curId = null, curSelectedDate = null, loaded = [], renderedDays = [];
+    const scroller = document.getElementById('scroller');
+
+    document.getElementById('toggle-trigger').onclick = function(e) {
+        const cb = document.getElementById('m-all');
+        if (e.target !== cb) cb.checked = !cb.checked;
+        toggleT();
+    };
+
+    function getDS(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+
+    function init() {
+        const now = new Date();
+        for(let i = -2; i <= 15; i++) renderMonth(now.getFullYear(), now.getMonth() + i);
+        setTimeout(jumpToday, 100);
+    }
+
+    function renderMonth(y, m) {
+        const first = new Date(y, m, 1);
+        const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
+        if(loaded.includes(k)) return;
+        loaded.push(k);
+
+        const sec = document.createElement('div');
+        sec.className = 'month-section';
+        sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
+        scroller.appendChild(sec);
+
+        const container = document.getElementById(`days-${k}`);
+        let r = new Date(first);
+
+        while(r.getMonth() === first.getMonth()) {
+            if (r.getDay() === 1) {
+                const sep = document.createElement('div');
+                sep.className = 'week-separator';
+                container.appendChild(sep);
+            }
+            const ds = getDS(r);
+            const isToday = ds === getDS(new Date());
+            const isWE = (r.getDay() === 0 || r.getDay() === 6);
+            
+            const row = document.createElement('div');
+            row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
+            row.id = `d-${ds}`;
+            row.onclick = () => openAdd(ds);
+            
+            row.innerHTML = `
+                <div class="date-col">
+                    <span class="date-number">${r.getDate()}.</span>
+                    <span class="date-day">${r.toLocaleDateString('de-DE',{weekday:'short'})}</span>
+                </div>
+                <div class="event-col" id="e-${ds}"></div>
+            `;
+            container.appendChild(row);
+            renderedDays.push({ds, date: new Date(r)});
+            drawEvents(ds, r);
+            r.setDate(r.getDate() + 1);
+        }
+    }
+
+    function drawEvents(ds, r) {
+        const target = document.getElementById(`e-${ds}`);
+        if(!target) return;
+        target.innerHTML = '';
+        db.forEach(e => {
+            if(exceptions.includes(e.id + '_' + ds)) return;
+            let show = false, rel = "full"; 
+            const sO = new Date(e.startDate), eO = new Date(e.endDate);
+            const dur = Math.round((eO - sO) / (1000 * 60 * 60 * 24));
+            if (e.rep === 'none') {
+                if (ds >= e.startDate && ds <= e.endDate) {
+                    show = true;
+                    if (ds === e.startDate && ds === e.endDate) rel = "full";
+                    else if (ds === e.startDate) rel = "start";
+                    else if (ds === e.endDate) rel = "end";
+                    else rel = "middle";
+                }
+            } else if (ds >= e.startDate) {
+                let a = new Date(sO);
+                while (getDS(a) <= ds) {
+                    let wS = getDS(a), wE_o = new Date(a); wE_o.setDate(wE_o.getDate() + dur);
+                    let wE = getDS(wE_o);
+                    if (ds >= wS && ds <= wE) { 
+                        show = true; 
+                        if (ds === wS && ds === wE) rel = "full";
+                        else if (ds === wS) rel = "start";
+                        else if (ds === wE) rel = "end";
+                        else rel = "middle";
+                        break; 
+                    }
+                    if (e.rep === 'daily') a.setDate(a.getDate() + 1);
+                    else if (e.rep === 'weekly') a.setDate(a.getDate() + 7);
+                    else if (e.rep === 'monthly') a.setMonth(a.getMonth() + 1);
+                    else if (e.rep === 'yearly') a.setFullYear(a.getFullYear() + 1);
+                    else break;
+                }
+            }
+            if(show) {
+                const div = document.createElement('div');
+                div.className = 'event-item';
+                let t = '';
+                if (!e.all) {
+                    if (rel === "full") t = `${e.startTime} `;
+                    else if (rel === "start") t = `${e.startTime} `;
+                    else if (rel === "end") t = `bis ${e.endTime} `;
+                }
+                div.innerText = t + e.title;
+                div.onclick = (x) => { x.stopPropagation(); openEdit(e, ds); };
+                target.appendChild(div);
+            }
+        });
+    }
+
+    function openAdd(ds) {
+        curId = null; curSelectedDate = ds;
+        document.getElementById('m-title').innerText = "Neu";
+        document.getElementById('m-text').value = '';
+        document.getElementById('m-start-date').value = ds;
+        document.getElementById('m-end-date').value = ds;
+        document.getElementById('m-time-start').value = "09:00";
+        document.getElementById('m-time-end').value = "10:00";
+        document.getElementById('m-all').checked = true; toggleT();
+        document.getElementById('m-del').style.display = 'none';
+        document.getElementById('m-event').style.display = 'flex';
+    }
+
+    function openEdit(e, ds) {
+        curId = e.id; curSelectedDate = ds;
+        document.getElementById('m-text').value = e.title;
+        document.getElementById('m-start-date').value = e.startDate;
+        document.getElementById('m-end-date').value = e.endDate;
+        document.getElementById('m-time-start').value = e.startTime || "09:00";
+        document.getElementById('m-time-end').value = e.endTime || "10:00";
+        document.getElementById('m-rep').value = e.rep;
+        document.getElementById('m-all').checked = e.all; toggleT();
+        document.getElementById('m-del').style.display = 'block';
+        document.getElementById('m-event').style.display = 'flex';
+    }
+
+    function save() {
+        const title = document.getElementById('m-text').value; if(!title) return;
+        const start = document.getElementById('m-start-date').value;
+        let end = document.getElementById('m-end-date').value; if(end < start) end = start;
+        const obj = { id: curId || Date.now(), title, startDate: start, endDate: end, all: document.getElementById('m-all').checked, startTime: document.getElementById('m-time-start').value, endTime: document.getElementById('m-time-end').value, rep: document.getElementById('m-rep').value };
+        if(curId) db = db.map(i => i.id === curId ? obj : i); else db.push(obj);
+        silentFinalize();
+    }
+
+    function silentFinalize() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        localStorage.setItem(EX_KEY, JSON.stringify(exceptions));
+        renderedDays.forEach(item => drawEvents(item.ds, item.date));
+        closePop();
+    }
+
+    function jumpToday() { const t = document.getElementById(`d-${getDS(new Date())}`); if(t) t.scrollIntoView({block:'center', behavior:'smooth'}); }
+    function closePop() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+    
+    function toggleT() { 
+        const isA = document.getElementById('m-all').checked;
+        document.getElementById('m-time-start-wrap').style.display = isA ? 'none' : 'block';
+        document.getElementById('m-time-end-wrap').style.display = isA ? 'none' : 'block';
+    }
+
+    function openBackup() { 
+        document.getElementById('b-export').value = JSON.stringify({db, exceptions}); 
+        document.getElementById('b-import').value = "";
+        document.getElementById('m-backup').style.display = 'flex'; 
+    }
+    function copyB() { const el = document.getElementById('b-export'); el.select(); navigator.clipboard.writeText(el.value); alert("Kopiert!"); }
+    function importB() { 
+        const text = document.getElementById('b-import').value.trim();
+        if(!text) return;
+        if(!confirm("Alles überschreiben?")) return;
+        try {
+            const data = JSON.parse(text); 
+            if(data.db) {
+                localStorage.clear();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data.db));
+                localStorage.setItem(EX_KEY, JSON.stringify(data.exceptions || []));
+                location.reload();
+            }
+        } catch(e) { alert("Fehler!"); }
+    }
+    function downloadB() { const blob = new Blob([JSON.stringify({db, exceptions})], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'kalender.json'; a.click(); }
+    function clearAllData() { if(confirm("Alles löschen?")) { localStorage.clear(); location.reload(); } }
+    function showDeleteOptions() { if(document.getElementById('m-rep').value !== 'none') document.getElementById('m-del-confirm').style.display = 'flex'; else delSerie(); }
+    function hideDeleteOptions() { document.getElementById('m-del-confirm').style.display = 'none'; }
+    function delSerie() { db = db.filter(i => i.id !== curId); silentFinalize(); }
+    function delSingle() { exceptions.push(curId + '_' + curSelectedDate); silentFinalize(); }
+
+    scroller.onscroll = () => { if(scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length-1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); }};
+    init();
+</script>
+</body>
+</html>
