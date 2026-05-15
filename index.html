@@ -2,10 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Kalender">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Infinity Calendar</title>
     <style>
         :root {
@@ -17,26 +14,19 @@
             --text-main: #1b5e20;
         }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    /* Verhindert, dass der schwarze Hintergrund des Body durchblitzt */
-    background: var(--bg-black); 
-    overflow: hidden;
-    /* Wichtig für iPhones im Querformat */
-    position: fixed; 
-}
+        body, html {
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            background: var(--bg-black);
+            font-family: -apple-system, sans-serif;
+            overflow: hidden;
+        }
 
 .calendar-scroll {
     height: 100vh; /* Fallback */
     height: 100dvh; /* Der eigentliche Fix für iOS */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-/* Entfernt den Sicherheitsabstand oben */
-    padding-top: 0 !important; 
-    margin-top: 0 !important;
     padding-bottom: 80px; /* Wichtig, damit man bis ganz unten scrollen kann */
 }
 
@@ -78,7 +68,7 @@ body, html {
             opacity: 0.8;
         }
 
-        .days-container { flex: 1; background: var(--bg-black); margin-right: -2px;}
+        .days-container { flex: 1; background: var(--bg-black); }
 
         .week-separator {
             height: 5px;
