@@ -164,9 +164,15 @@ background: rgba(46, 125, 50, 0.7);
 }
 
 /* Stellt sicher, dass die Inputs die volle Breite nutzen */
-.m-box input[type="date"], 
-.m-box input[type="time"] {
+.m-box input[type="text"],
+.m-box input[type="date"],
+.m-box input[type="time"],
+.m-box select,
+.m-box textarea {
     width: 100% !important;
+    box-sizing: border-box; /* Wichtig: Padding wird in die Breite eingerechnet */
+    height: 48px; /* Einheitliche Höhe für alle Felder */
+    margin: 8px 0;
     display: block;
 }
 /* Macht die Titel "Neu", "Termin" und "Backup" weiß */
