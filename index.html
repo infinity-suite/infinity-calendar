@@ -5,31 +5,104 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover", user-scalable=no">
     <title>Infinity Calendar</title>
     <style>
-       :root {
-    /* Helle Basis (deine stabilen Farben) */
+     :root {
     --bg-black: #000000;
     --sidebar-gray: #3d3d3d;
     --row-light: #e1fbc4;
     --row-dark: #c9efaa;
-    --today-yellow: #fff176;
+    --today-yellow: #FC9D59;
     --text-main: #1b5e20;
-    --text-event: #000000;   /* Neu für Darkmode-Steuerung */
-    --text-sidebar: #ffffff; /* Neu für Darkmode-Steuerung */
---bg-button: rgba(46, 125, 50, 0.7);
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(46, 125, 50, 0.7);
 }
 
-/* Automatische Umschaltung auf Darkmode */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --sidebar-gray: #121212;
-        --row-light: #1D2619;
-        --row-dark: #161D12;
-        --today-yellow: #5E541B;
-        --text-main: #DCE6D8;
-        --text-event: #FFFFFF;
-        --text-sidebar: #888888;
---bg-button: rgba(20, 50, 20, 0.9);
-    }
+[data-theme="blue"] {
+    --sidebar-gray: #2c3e50;
+    --row-light: #e3f2fd;
+    --row-dark: #bbdefb;
+    --today-yellow: #fff59d;
+    --text-main: #0d47a1;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(13, 71, 161, 0.7);
+}
+
+[data-theme="red"] {
+    --sidebar-gray: #4a1414;
+    --row-light: #ffebee;
+    --row-dark: #ffcdd2;
+    --today-yellow: #fff59d;
+    --text-main: #b71c1c;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(183, 28, 28, 0.7);
+}
+
+[data-theme="gray"] {
+    --sidebar-gray: #212121;
+    --row-light: #f5f5f5;
+    --row-dark: #e0e0e0;
+    --today-yellow: #fff59d;
+    --text-main: #424242;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(66, 66, 66, 0.7);
+}
+
+[data-theme="yellow"] {
+    --sidebar-gray: #fbc02d;
+    --row-light: #fffde7;
+    --row-dark: #fff9c4;
+    --today-yellow: #00e5ff; /* Cyan sticht auf Gelb hervor */
+    --text-main: #f57f17;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(251, 192, 45, 0.8);
+}
+
+[data-theme="orange"] {
+    --sidebar-gray: #e65100;
+    --row-light: #fff3e0;
+    --row-dark: #ffe0b2;
+    --today-yellow: #00e5ff;
+    --text-main: #e65100;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(230, 81, 0, 0.8);
+}
+
+[data-theme="pink"] {
+    --sidebar-gray: #880e4f;
+    --row-light: #fce4ec;
+    --row-dark: #f8bbd0;
+    --today-yellow: #b2ff59; /* Neongrün sticht auf Pink hervor */
+    --text-main: #ad1457;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(136, 14, 79, 0.8);
+}
+
+[data-theme="purple"] {
+    --sidebar-gray: #4a148c;
+    --row-light: #f3e5f5;
+    --row-dark: #e1bee7;
+    --today-yellow: #76ff03;
+    --text-main: #6a1b9a;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(74, 20, 140, 0.8);
+}
+
+[data-theme="turquoise"] {
+    --sidebar-gray: #006064;
+    --row-light: #e0f2f1;
+    --row-dark: #b2dfdb;
+    --today-yellow: #ff4081; /* Pink sticht auf Türkis hervor */
+    --text-main: #00695c;
+    --text-event: #000000;
+    --text-sidebar: #ffffff;
+    --bg-button: rgba(0, 96, 100, 0.8);
 }
 
         body, html {
@@ -245,6 +318,109 @@ background: var(--bg-button) !important;
 
         hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --sidebar-gray: #121212;
+        --row-light: #1D2619;
+        --row-dark: #161D12;
+        --today-yellow: #5E541B;
+        --text-main: #DCE6D8;
+        --text-event: #FFFFFF;
+        --text-sidebar: #888888;
+        --bg-button: rgba(20, 50, 20, 0.9);
+    }
+
+    [data-theme="blue"] {
+        --sidebar-gray: #0a0e14;
+        --row-light: #0d1b2a;
+        --row-dark: #1b263b;
+        --today-yellow: #413d1a;
+        --text-main: #e0e1dd;
+        --text-event: #FFFFFF;
+        --text-sidebar: #778da9;
+        --bg-button: rgba(13, 30, 71, 0.9);
+    }
+
+    [data-theme="red"] {
+        --sidebar-gray: #1a0505;
+        --row-light: #2d1616;
+        --row-dark: #3d1a1a;
+        --today-yellow: #4d2d10;
+        --text-main: #f8d7da;
+        --text-event: #FFFFFF;
+        --text-sidebar: #a55d5d;
+        --bg-button: rgba(71, 13, 13, 0.9);
+    }
+
+    [data-theme="gray"] {
+        --sidebar-gray: #050505;
+        --row-light: #1a1a1a;
+        --row-dark: #2a2a2a;
+        --today-yellow: #FF0000; /* Knalliges Cyan sticht auf Dunkelgrau hervor */
+        --text-main: #ffffff;
+        --text-event: #FFFFFF;
+        --text-sidebar: #666666;
+        --bg-button: rgba(40, 40, 40, 0.9);
+    }
+
+[data-theme="yellow"] { 
+        --sidebar-gray: #1a1a00; 
+        --row-light: #fff59d; /* Heller lassen für echten Gelb-Look */
+        --row-dark: #fdd835; 
+        --today-yellow: #00b0ff; 
+        --text-main: #000000 !important; /* Text MUSS schwarz sein */
+        --text-event: #000000 !important; 
+        --text-sidebar: #888800; 
+        --bg-button: rgba(253, 216, 53, 0.9); 
+    }
+
+    [data-theme="turquoise"] { 
+        --sidebar-gray: #001a1a; 
+        --row-light: #80cbc4; /* Helleres Türkis */
+        --row-dark: #4db6ac; 
+        --today-yellow: #ff4081; 
+        --text-main: #000000 !important; /* Schwarz für Lesbarkeit */
+        --text-event: #000000 !important; 
+        --text-sidebar: #008888; 
+        --bg-button: rgba(0, 150, 136, 0.9); 
+    }
+
+    [data-theme="orange"] { 
+        --sidebar-gray: #1a0a00; 
+        --row-light: #ffb74d; 
+        --row-dark: #ffa726; 
+        --today-yellow: #18ffff; 
+        --text-main: #000000 !important; 
+        --text-event: #000000 !important; 
+        --text-sidebar: #884400; 
+        --bg-button: rgba(255, 152, 0, 0.9);
+    }
+
+ 
+
+    [data-theme="pink"] {
+        --sidebar-gray: #1a000a;
+        --row-light: #2d0014;
+        --row-dark: #1a000a;
+        --today-yellow: #FF0000;
+        --text-main: #f48fb1;
+        --text-sidebar: #880044;
+        --bg-button: rgba(80, 0, 40, 0.9);
+    }
+
+    [data-theme="purple"] {
+        --sidebar-gray: #0a001a;
+        --row-light: #14002d;
+        --row-dark: #0a001a;
+        --today-yellow: #FF0000;
+        --text-main: #ce93d8;
+        --text-sidebar: #440088;
+        --bg-button: rgba(40, 0, 80, 0.9);
+    }
+
+ 
+}
+
 /* Nur aktiv, wenn das Handy quer liegt */
 @media (orientation: landscape) {
     .month-rail {
@@ -359,7 +535,18 @@ background: var(--bg-button) !important;
             <button class="btn-green" onclick="importB()">Importieren</button>
             <button class="btn-gray" onclick="downloadB()">Download</button>
             <button class="btn-red" onclick="clearAllData()">Reset</button>
-            <button class="btn-gray full" onclick="closePop()">Schließen</button>
+
+<select id="theme-select" onchange="changeTheme(this.value)">
+    <option value="green">Grün (Standard)</option>
+    <option value="blue">Blau</option>
+    <option value="red">Rot</option>
+    <option value="gray">Grau</option>
+    <option value="yellow">Gelb</option>
+    <option value="orange">Orange</option>
+    <option value="pink">Pink</option>
+    <option value="purple">Lila</option>
+    <option value="turquoise">Türkis</option>
+</select> <button class="btn-gray full" onclick="closePop()">Schließen</button>
         </div>
     </div>
 </div>
@@ -563,6 +750,22 @@ background: var(--bg-button) !important;
 
     scroller.onscroll = () => { if(scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length-1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); }};
     init();
+
+
+function changeTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('inf_theme', theme);
+}
+
+// Beim Start das gespeicherte Thema laden
+(function() {
+    const savedTheme = localStorage.getItem('inf_theme') || 'green';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const select = document.getElementById('theme-select');
+    if(select) select.value = savedTheme;
+})();
+
+
 </script>
 </body>
 </html>
