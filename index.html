@@ -321,47 +321,63 @@ background: var(--bg-button) !important;
     }
 }
 
+/* ECHTE ZENTRIERUNG & SAUBERES GRÜN FÜR LANDSCAPE */
 @media screen and (orientation: landscape) {
-    /* 1. Die Sektion muss den Platz freigeben */
-    html body .month-section {
+    /* 1. Hintergrund der Sektion auf Grau, damit links/rechts keine schwarzen Löcher entstehen */
+    .month-section {
         display: block !important;
         position: relative !important;
-        background-color: var(--bg-sidebar) !important;
+        background-color: var(--bg-sidebar) !important; 
         width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
+        border-top: 8px solid var(--month-sep) !important;
     }
 
-    /* 2. Der Kalender-Block MUSS in die Mitte */
-    html body .days-container {
+    /* 2. Der Kalender-Block: Jetzt wirklich mittig und mit sattem Grün */
+    .days-container {
         display: block !important;
-        margin: 0 auto !important; /* Erzwingt die Zentrierung */
-        max-width: 650px !important; /* Etwas schmaler für besseren Fokus */
+        margin: 0 auto !important; 
+        max-width: 650px !important; 
         width: 100% !important;
-        background-color: var(--bg-calendar) !important; /* Das durchgehende Grün */
-        position: relative !important;
-        float: none !important; /* Verhindert seitliches Kleben */
+        background-color: var(--bg-calendar) !important;
+        /* Schatten für den "Papier-auf-Tisch"-Effekt */
+        box-shadow: 0 0 30px rgba(0,0,0,0.5); 
+        min-height: 100%;
     }
 
-    /* 3. Die Schiene komplett isolieren */
-    html body .month-rail {
+    /* 3. Die Schiene: Sie "schwebt" links, damit sie die Mitte nicht verschiebt */
+    .month-rail {
         position: absolute !important;
         left: 0 !important;
         top: 0 !important;
         bottom: 0 !important;
-        width: 50px !important;
+        width: calc(60px + env(safe-area-inset-left)) !important;
         background-color: var(--bg-sidebar) !important;
-        z-index: 100 !important;
+        z-index: 10 !important;
+        border: none !important;
     }
 
-    /* 4. Den Text in der Schiene mittig halten */
-    html body .sticky-wrapper {
+    /* 4. Der Monatsname: Bleibt beim Scrollen links sichtbar */
+    .sticky-wrapper {
         position: sticky !important;
         top: 0 !important;
         height: 100vh !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        padding-left: env(safe-area-inset-left) !important;
+    }
+
+    /* 5. Zeilen-Fix: Damit das Grün innerhalb der 650px keine Lücken hat */
+    .day-row {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Korrektur für die Buttons, damit sie im Querformat nicht stören */
+    .f-btn {
+        width: 55px !important;
+        height: 55px !important;
+        bottom: 15px !important;
     }
 }
 
