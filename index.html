@@ -6,26 +6,35 @@
     <title>Infinity Calendar</title>
     <style>
 :root {
-    /* DEIN AKTUELLES DESIGN (Light Mode) */
-    --bg-sidebar: #333333;      /* Das dunkle Grau links */
-    --bg-calendar: #e1f2b1;     /* Das helle Grün der Zeilen */
-    --bg-weekend: #d4e8a0;      /* Etwas dunkleres Grün für Sa/So */
-    --bg-today: #fff3a0;        /* Dein Gelb für heute */
-    --text-main: #2d4a22;       /* Dunkelgrüner Text */
-    --text-sidebar: #ffffff;    /* Weißer Text in der Schiene */
-    --week-sep: #333333;        /* Dein Trenner */
+    /* VIVID NATURE (Satter, klarer, grüner) */
+    --bg-sidebar: #333333;      
+    --bg-calendar: #CAEE95;     /* Ein klares, sattes Maigrün */
+    --bg-row-alt: #DBF6B3;      /* Der Wechsel ist jetzt frischer, nicht gräulich */
+    --bg-weekend: #B9E66B;      /* Das Wochenende "poppt" jetzt richtig */
+    --bg-today: #FFEB3B;        /* Ein knalliges, reines Gelb */
+    
+    /* HIER LIEGT DER TRICK: */
+    --text-main: #1B3F0A;       /* Ein extrem sattes, dunkles Tannengrün statt Schwarz */
+    --text-event: #000000;      
+    --bg-button: rgba(46, 125, 50, 0.8); /* Kräftiges Grün für die Buttons */
+    --text-sidebar: #ffffff;    
+    --month-sep: #000000;       
+    --week-sep: #333333;        
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /* DARK MODE VERSION */
-        --bg-sidebar: #1a1a1a;      /* Fast Schwarz */
-        --bg-calendar: #1b2615;     /* Tiefes, dunkles Moosgrün */
-        --bg-weekend: #141d10;      /* Noch dunkleres Grün */
-        --bg-today: #4d4510;        /* Ein dunkles, gedimmtes Gold/Gelb */
-        --text-main: #d1e0c9;       /* Hellgrau-Grüner Text */
-        --text-sidebar: #aaaaaa;    /* Dezenteres Grau links */
-        --week-sep: #000000;        /* Schwarzer Trenner */
+        /* DARK MODE (Edel & Augenfreundlich) */
+        --bg-sidebar: #121212;      /* Fast Schwarz für maximale Tiefe */
+        --bg-calendar: #1D2619;     /* Dunkles Moosgrün */
+        --bg-row-alt: #161D12;      /* Subtiler Zeilenwechsel */
+        --bg-weekend: #131A10;      /* Wochenende wirkt ruhiger */
+        --bg-today: #5E541B;        /* Gedimmter Goldton */
+        --text-main: #DCE6D8;       /* Sanftes Cremeweiß-Grün (kein hartes Weiß) */
+--bg-button: rgba(25, 50, 20, 0.9); /* Viel dunkleres, satteres Waldgrün für Dark Mode */
+        --text-event: #FFFFFF;      
+        --text-sidebar: #888888;    
+        --week-sep: #000000;        
     }
 }
 
@@ -49,11 +58,20 @@ overflow-y: auto !important;
     margin-top: 0 !important;
 }
 
-        .month-section {
-            display: flex;
-            background: var(--bg-black);
-            border-bottom: 6px solid var(--bg-black);
-        }
+       .month-section {
+    display: flex;
+    /* Das hier ist der entscheidende Balken zwischen den Monaten */
+    border-top: 8px solid var(--month-sep) !important;
+    background-color: var(--month-sep) !important;
+}
+
+/* Falls die Tage den Balken überlagern, geben wir dem Container einen Abstand */
+.days-container { 
+    flex: 1; 
+    background-color: var(--bg-calendar);
+    /* Ein winziger Rand oben sorgt dafür, dass die Trennlinie sichtbar bleibt */
+    border-top: 2px solid var(--week-sep);
+}
 
         .month-rail {
             width: 45px;
@@ -106,8 +124,12 @@ background-color: var(--week-sep);
             align-items: flex-start;
         }
 
-        .day-row:nth-child(even) { background: var(--row-dark); }
-        .day-row.today { background-color: var(--bg-today) !important; }
+        .day-row:nth-child(even) { background: var(--bg-row-alt); }
+.day-row.today {
+    background-color: var(--bg-today) !important;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05); /* Dezente Tiefe */
+    z-index: 1; /* Falls du später Ränder hinzufügst */
+}
 
         .date-col { 
             width: 80px; 
@@ -139,7 +161,7 @@ background-color: var(--week-sep);
         }
         
         .event-item { 
-            color: #000; 
+        color: var(--text-event) !important;
             cursor: pointer; 
             line-height: 1.4;
             font-size: 1.05rem;
@@ -152,7 +174,7 @@ background-color: var(--week-sep);
     width: 65px; 
     height: 65px; 
     border-radius: 50%; /* Hier von 22px auf 50% ändern */
-background: rgba(46, 125, 50, 0.7);
+background: var(--bg-button) !important;
     color: white; 
     border: none;
     font-weight: bold; 
