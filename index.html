@@ -776,27 +776,74 @@ background: var(--bg-button) !important;
         document.getElementById('m-time-end-wrap').style.display = isA ? 'none' : 'block';
     }
 
-    function openBackup() { 
-        document.getElementById('b-export').value = JSON.stringify({db, exceptions}); 
-        document.getElementById('b-import').value = "";
-        document.getElementById('m-backup').style.display = 'flex'; 
+function openBackup() { 
+        try {
+            const rawData = JSON.stringify({db, exceptions});
+            // Macht den Text im Feld unlesbar (sicher vor Umlaut-Fehlern)
+            const verschluesselt = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+            
+            document.getElementById('b-export').value = verschluesselt; 
+            document.getElementById('b-import').value = "";
+            document.getElementById('m-backup').style.display = 'flex'; 
+        } catch(e) {
+            alert("Fehler beim Öffnen des Backups.");
+        }
     }
+
     function copyB() { const el = document.getElementById('b-export'); el.select(); navigator.clipboard.writeText(el.value); alert("Kopiert!"); }
+
     function importB() { 
         const text = document.getElementById('b-import').value.trim();
         if(!text) return;
         if(!confirm("Alles überschreiben?")) return;
         try {
-            const data = JSON.parse(text); 
+            // Entschlüsselt den Salat wieder zurück
+            const klarText = decodeURIComponent(atob(text).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            
+            const data = JSON.parse(klarText); 
             if(data.db) {
                 localStorage.clear();
+                // Hier nutzen wir deine Original-Variablen
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data.db));
                 localStorage.setItem(EX_KEY, JSON.stringify(data.exceptions || []));
                 location.reload();
             }
-        } catch(e) { alert("Fehler!"); }
+        } catch(e) { 
+            alert("Fehler! Das ist kein gültiges oder ein beschädigtes Backup."); 
+        }
     }
-    function downloadB() { const blob = new Blob([JSON.stringify({db, exceptions})], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'kalender.json'; a.click(); }
+
+    function downloadB() { 
+        try {
+            const rawData = JSON.stringify({db, exceptions});
+            
+            // Text unlesbar machen
+            const verschluesselterText = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+            
+            // Wichtig: Wir nehmen 'text/plain', das blockiert kein Browser
+            const blob = new Blob([verschluesselterText], {type: 'text/plain'}); 
+            const a = document.createElement('a'); 
+            a.href = URL.createObjectURL(blob); 
+            a.download = 'kalender_backup.txt'; 
+            
+            // Dieser Teil zwingt iOS/Safari dazu, die Datei wirklich zu speichern
+            document.body.appendChild(a);
+            a.click(); 
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(a.href);
+            }, 100);
+        } catch(e) {
+            alert("Fehler beim Download.");
+        }
+    }
+
     function clearAllData() { if(confirm("Alles löschen?")) { localStorage.clear(); location.reload(); } }
     function showDeleteOptions() { if(document.getElementById('m-rep').value !== 'none') document.getElementById('m-del-confirm').style.display = 'flex'; else delSerie(); }
     function hideDeleteOptions() { document.getElementById('m-del-confirm').style.display = 'none'; }
@@ -824,6 +871,8 @@ function changeTheme(theme) {
 document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
 });
+
+
 
 </script>
 </body>
