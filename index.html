@@ -505,27 +505,27 @@ background: var(--bg-button) !important;
 <div class="calendar-scroll" id="scroller"></div>
 
 <button onclick="jumpToday()" style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff; border: 0px solid #333333; padding: 10px 20px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
-    JETZT
+    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'TODAY' : 'JETZT')</script>
 </button>
 
 <button onclick="openSearch()" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff; border: 0px solid #333333; padding: 10px 20px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
-    SUCHE
+   <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'SEARCH' : 'SUCHE')</script>
 </button>
 
 <div id="m-search" class="modal">
     <div class="m-box" style="padding: 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
-        <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">Termine durchsuchen</h3>
+        <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search' : 'Termine suchen')</script></h3>
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Suchbegriff</label>
-        <input type="text" id="s-input" oninput="runSearch()" placeholder="Suchbegriff eingeben..." style="width: 100%; height: 44px; font-size: 0.9rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 15px; outline: none;">
+        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search term' : 'Suchbegriff')</script></label>
+        <input type="text" id="s-input" oninput="runSearch()" placeholder="..." style="width: 100%; height: 44px; font-size: 0.9rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 15px; outline: none;">
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Ergebnisse</label>
+        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Results' : 'Ergebnisse')</script></label>
         <div id="s-results" style="width: 100%; max-height: 200px; overflow-y: auto; font-size: 0.85rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 25px;">
-            <p style="color: #666; margin: 0; font-style: italic;">Tippe etwas ein, um zu suchen...</p>
+            <p style="color: #666; margin: 0; font-style: italic;">...</p>
         </div>
         
         <div class="btn-grid">
-            <button class="btn-gray full" onclick="document.getElementById('m-search').style.display='none'">Schließen</button>
+            <button class="btn-gray full" onclick="document.getElementById('m-search').style.display='none'"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script></button>
         </div>
     </div>
 </div>
@@ -592,43 +592,43 @@ background: var(--bg-button) !important;
     <div class="m-box" style="padding: 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
         <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">Tools</h3>
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Bestehender Code</label>
+        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Code</label>
         <textarea id="b-export" readonly style="width: 100%; height: 60px; font-size: 0.8rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 12px; font-family: monospace;"></textarea>
         
         <div class="btn-grid" style="margin-bottom: 20px;">
-            <button class="btn-gray full" onclick="copyB()">Code kopieren</button>
+            <button class="btn-gray full" onclick="copyB()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Copy Code' : 'Code kopieren')</script></button>
             <button class="btn-gray" onclick="downloadB()">Download</button>
-            <button class="btn-red" onclick="clearAllData()">Löschen</button>
+            <button class="btn-red" onclick="clearAllData()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Delete' : 'Löschen')</script></button>
         </div>
         
         <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Wiederherstellen</label>
-        <textarea id="b-import" style="width: 100%; height: 60px; font-size: 0.8rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 12px;" placeholder="Code einfügen, danach importieren."></textarea>
+        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Recovery' : 'Wiederherstellen')</script></label>
+        <textarea id="b-import" style="width: 100%; height: 60px; font-size: 0.8rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 12px;" placeholder="Code..."></textarea>
         
         <div class="btn-grid" style="margin-bottom: 20px;">
-            <button class="btn-green full" onclick="importB()">Importieren</button>
+            <button class="btn-green full" onclick="importB()">Import</button>
         </div>
         
         <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Erscheinungsbild</label>
+        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Design</label>
         
         <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%; height: 44px; margin-bottom: 25px; font-size: 16px; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
-            <option value="green">Grün</option>
-            <option value="blue">Blau</option>
-            <option value="red">Rot</option>
-            <option value="gray">Grau</option>
-            <option value="yellow">Gelb</option>
-            <option value="orange">Orange</option>
-            <option value="pink">Pink</option>
-            <option value="purple">Lila</option>
-            <option value="turquoise">Türkis</option>
-            <option value="bw">Schwarzweiß</option>
+            <option value="green">Mint</option>
+            <option value="blue">Ocean</option>
+            <option value="red">Lava</option>
+            <option value="gray">Slate</option>
+            <option value="yellow">Amber</option>
+            <option value="orange">Coral</option>
+            <option value="pink">Berry</option>
+            <option value="purple">Iris</option>
+            <option value="turquoise">Aqua</option>
+            <option value="bw">Mono</option>
         </select>
 
         <div class="btn-grid">
-            <button class="btn-gray full" onclick="closePop()">Schließen</button>
+            <button class="btn-gray full" onclick="closePop()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script></button>
         </div>
     </div>
 </div>
@@ -662,9 +662,9 @@ background: var(--bg-button) !important;
     loaded.push(k);
 
     // Minimalistisches CSS für weißen Text mit schwarzem Umriss
-    if (!document.getElementById('kw-separator-style')) {
+    if (!document.getElementById('w-separator-style')) {
         const style = document.createElement('style');
-        style.id = 'kw-separator-style';
+        style.id = 'w-separator-style';
         style.innerHTML = `
             .week-separator {
                 position: relative;
@@ -672,7 +672,7 @@ background: var(--bg-button) !important;
                 justify-content: center;
                 align-items: center;
             }
-            .kw-label {
+            .w-label {
                 position: absolute;
                 font-size: 0.8rem;
                 font-weight: bold;
@@ -709,7 +709,7 @@ background: var(--bg-button) !important;
 
 
 
-    // Hilfsfunktion zur exakten Berechnung der KW (ISO-8601)
+    // Hilfsfunktion zur exakten Berechnung der W (ISO-8601)
     function getWeekNumber(date) {
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const dayNum = d.getUTCDay() || 7;
@@ -720,7 +720,7 @@ background: var(--bg-button) !important;
 
     const sec = document.createElement('div');
     sec.className = 'month-section';
-    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
+    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('default',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
     scroller.appendChild(sec);
 
     const container = document.getElementById(`days-${k}`);
@@ -731,8 +731,8 @@ background: var(--bg-button) !important;
             const sep = document.createElement('div');
             sep.className = 'week-separator';
             
-            const kw = getWeekNumber(r);
-            sep.innerHTML = `<div class="kw-label">KW ${kw}</div>`;
+            const w = getWeekNumber(r);
+            sep.innerHTML = `<div class="w-label">W ${w}</div>`;
             
             container.appendChild(sep);
         }
@@ -748,7 +748,7 @@ background: var(--bg-button) !important;
         row.innerHTML = `
             <div class="date-col">
                 <span class="date-number">${r.getDate()}.</span>
-                <span class="date-day">${r.toLocaleDateString('de-DE',{weekday:'short'})}</span>
+                <span class="date-day">${r.toLocaleDateString('default',{weekday:'short'})}</span>
             </div>
             <div class="event-col" id="e-${ds}"></div>
         `;
@@ -869,10 +869,10 @@ function renderMonth(y, m) {
     if(loaded.includes(k)) return;
     loaded.push(k);
 
-    // CSS für die KW-Schilder und die saubere Ausrichtung der Emojis
-    if (!document.getElementById('kw-separator-style')) {
+    // CSS für die W-Schilder und die saubere Ausrichtung der Emojis
+    if (!document.getElementById('w-separator-style')) {
         const style = document.createElement('style');
-        style.id = 'kw-separator-style';
+        style.id = 'w-separator-style';
         style.innerHTML = `
             .week-separator {
                 position: relative;
@@ -880,7 +880,7 @@ function renderMonth(y, m) {
                 justify-content: center;
                 align-items: center;
             }
-            .kw-label {
+            .w-label {
                 position: absolute;
                 font-size: 0.75rem;
                 font-weight: bold;
@@ -917,7 +917,7 @@ function renderMonth(y, m) {
         document.head.appendChild(style);
     }
 
-    // Hilfsfunktion zur exakten Berechnung der KW (ISO-8601)
+    // Hilfsfunktion zur exakten Berechnung der W (ISO-8601)
     function getWeekNumber(date) {
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const dayNum = d.getUTCDay() || 7;
@@ -945,7 +945,7 @@ function renderMonth(y, m) {
 
     const sec = document.createElement('div');
     sec.className = 'month-section';
-    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
+    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('default',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
     scroller.appendChild(sec);
 
     const container = document.getElementById(`days-${k}`);
@@ -955,8 +955,8 @@ function renderMonth(y, m) {
         if (r.getDay() === 1) {
             const sep = document.createElement('div');
             sep.className = 'week-separator';
-            const kw = getWeekNumber(r);
-            sep.innerHTML = `<div class="kw-label">KW ${kw}</div>`;
+            const w = getWeekNumber(r);
+            sep.innerHTML = `<div class="w-label">W ${w}</div>`;
             container.appendChild(sep);
         }
         const ds = getDS(r);
@@ -973,7 +973,7 @@ function renderMonth(y, m) {
         row.innerHTML = `
             <div class="date-col">
                 <span class="date-number">${r.getDate()}.</span>
-                <span class="date-day">${r.toLocaleDateString('de-DE',{weekday:'short'})}</span>
+                <span class="date-day">${r.toLocaleDateString('default',{weekday:'short'})}</span>
             </div>
             <div class="event-col" id="e-${ds}"></div>
             <div class="moon-col">${moonSymbol}</div>
@@ -1125,7 +1125,7 @@ document.addEventListener('gesturestart', function (e) {
 // 1. Öffnet das Suchfenster
 function openSearch() {
     document.getElementById('s-input').value = "";
-    document.getElementById('s-results').innerHTML = "<p style='color:gray; font-size:14px;'>...</p>";
+    document.getElementById('s-results').innerHTML = "<p style='color:gray; font-size:14px;'> </p>";
     document.getElementById('m-search').style.display = 'flex';
     document.getElementById('s-input').focus();
 }
