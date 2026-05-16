@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+    <script src="capacitor.js"></script>
     <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>Infinity Calendar</title>
@@ -838,14 +839,49 @@ background: var(--bg-button) !important;
         document.getElementById('m-event').style.display = 'flex';
     }
 
-    function save() {
+function save() {
         const title = document.getElementById('m-text').value; if(!title) return;
         const start = document.getElementById('m-start-date').value;
         let end = document.getElementById('m-end-date').value; if(end < start) end = start;
         const obj = { id: curId || Date.now(), title, startDate: start, endDate: end, all: document.getElementById('m-all').checked, startTime: document.getElementById('m-time-start').value, endTime: document.getElementById('m-time-end').value, rep: document.getElementById('m-rep').value };
         if(curId) db = db.map(i => i.id === curId ? obj : i); else db.push(obj);
+        
+        // --- PUSH NOTIFICATION AN XCODE SENDEN (2 STUNDEN VORHER & ZWEISPRACHIG) ---
+        if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.pushBridge) {
+            const timeStart = obj.all ? "09:00" : obj.startTime;
+            
+            // Datum splitten, um den Zeitzonen-Bug zu umgehen
+            const parts = obj.startDate.split('-'); 
+            const timeParts = timeStart.split(':'); 
+            
+            // Lokale Zeit berechnen
+            let notificationTime = new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
+            
+            // Genau 2 Stunden abziehen
+            notificationTime.setHours(notificationTime.getHours() - 2);
+            
+            // Sauberen String für Xcode bauen
+            const pad = (num) => String(num).padStart(2, '0');
+            const localIsoDate = `${notificationTime.getFullYear()}-${pad(notificationTime.getMonth() + 1)}-${pad(notificationTime.getDate())}T${pad(notificationTime.getHours())}:${pad(notificationTime.getMinutes())}:00`;
+            
+            // Sprache abfragen
+            const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
+            const notificationTitle = isEnglish ? "Upcoming Event" : "Anstehender Termin";
+            
+            const notificationData = {
+                title: notificationTitle,
+                body: obj.title,
+                date: localIsoDate
+            };
+            
+            // Daten an Xcode schicken
+            window.webkit.messageHandlers.pushBridge.postMessage(notificationData);
+        }
+        // ---------------------------------------------------------------------------
+
         silentFinalize();
     }
+
 
     function silentFinalize() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
