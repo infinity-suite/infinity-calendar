@@ -501,7 +501,7 @@ background: var(--bg-button) !important;
     </style>
 </head>
 <body>
-
+<div style="position: fixed; bottom: 0; left: 0; width: 100%; height: 2px; z-index: 9; background-color: #000000; box-shadow: 0 0px 40px 30px #000000; pointer-events: none;"></div>
 <div class="calendar-scroll" id="scroller"></div>
 
 <button onclick="jumpToday()" style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff; border: 0px solid #333333; padding: 10px 20px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
@@ -656,47 +656,105 @@ background: var(--bg-button) !important;
     }
 
     function renderMonth(y, m) {
-        const first = new Date(y, m, 1);
-        const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
-        if(loaded.includes(k)) return;
-        loaded.push(k);
+    const first = new Date(y, m, 1);
+    const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
+    if(loaded.includes(k)) return;
+    loaded.push(k);
 
-        const sec = document.createElement('div');
-        sec.className = 'month-section';
-        sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
-        scroller.appendChild(sec);
-
-        const container = document.getElementById(`days-${k}`);
-        let r = new Date(first);
-
-        while(r.getMonth() === first.getMonth()) {
-            if (r.getDay() === 1) {
-                const sep = document.createElement('div');
-                sep.className = 'week-separator';
-                container.appendChild(sep);
+    // Minimalistisches CSS für weißen Text mit schwarzem Umriss
+    if (!document.getElementById('kw-separator-style')) {
+        const style = document.createElement('style');
+        style.id = 'kw-separator-style';
+        style.innerHTML = `
+            .week-separator {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
-            const ds = getDS(r);
-            const isToday = ds === getDS(new Date());
-            const isWE = (r.getDay() === 0 || r.getDay() === 6);
-            
-            const row = document.createElement('div');
-            row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
-            row.id = `d-${ds}`;
-            row.onclick = () => openAdd(ds);
-            
-            row.innerHTML = `
-                <div class="date-col">
-                    <span class="date-number">${r.getDate()}.</span>
-                    <span class="date-day">${r.toLocaleDateString('de-DE',{weekday:'short'})}</span>
-                </div>
-                <div class="event-col" id="e-${ds}"></div>
-            `;
-            container.appendChild(row);
-            renderedDays.push({ds, date: new Date(r)});
-            drawEvents(ds, r);
-            r.setDate(r.getDate() + 1);
-        }
+            .kw-label {
+                position: absolute;
+                font-size: 0.8rem;
+                font-weight: bold;
+                letter-spacing: 1.5px;
+                
+                /* Text ist immer strahlend weiß */
+                color: #ffffff !important;
+                
+                /* Kein Hintergrund, komplett nackt */
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0;
+                
+                /* Der Text-Schatten-Trick für einen perfekten, rundherum geschlossenen schwarzen Rahmen */
+                text-shadow: 
+                    -1px -1px 0 #000,  
+                     1px -1px 0 #000,
+                    -1px  1px 0 #000,
+                     1px  1px 0 #000,
+                     0px -1px 0 #000,
+                     0px  1px 0 #000,
+                    -1px  0px 0 #000,
+                     1px  0px 0 #000;
+                
+                z-index: 10;
+                transform: translateY(-50%);
+                top: 50%;
+            }
+        `;
+        document.head.appendChild(style);
     }
+
+    // Hilfsfunktion zur exakten Berechnung der KW (ISO-8601)
+    function getWeekNumber(date) {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        const dayNum = d.getUTCDay() || 7;
+        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+        return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
+    const sec = document.createElement('div');
+    sec.className = 'month-section';
+    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
+    scroller.appendChild(sec);
+
+    const container = document.getElementById(`days-${k}`);
+    let r = new Date(first);
+
+    while(r.getMonth() === first.getMonth()) {
+        if (r.getDay() === 1) {
+            const sep = document.createElement('div');
+            sep.className = 'week-separator';
+            
+            const kw = getWeekNumber(r);
+            sep.innerHTML = `<div class="kw-label">KW ${kw}</div>`;
+            
+            container.appendChild(sep);
+        }
+        const ds = getDS(r);
+        const isToday = ds === getDS(new Date());
+        const isWE = (r.getDay() === 0 || r.getDay() === 6);
+        
+        const row = document.createElement('div');
+        row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
+        row.id = `d-${ds}`;
+        row.onclick = () => openAdd(ds);
+        
+        row.innerHTML = `
+            <div class="date-col">
+                <span class="date-number">${r.getDate()}.</span>
+                <span class="date-day">${r.toLocaleDateString('de-DE',{weekday:'short'})}</span>
+            </div>
+            <div class="event-col" id="e-${ds}"></div>
+        `;
+        container.appendChild(row);
+        renderedDays.push({ds, date: new Date(r)});
+        drawEvents(ds, r);
+        r.setDate(r.getDate() + 1);
+    }
+}
 
     function drawEvents(ds, r) {
         const target = document.getElementById(`e-${ds}`);
