@@ -269,10 +269,10 @@ background: var(--bg-button) !important;
     margin-top: 0;
 }
         .btn-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .btn-grid button { height: 48px; flex: 1 1 45%; border: none; border-radius: 12px; font-weight: bold; font-size: 0.95rem; }
+        .btn-grid button { height: 40px; flex: 1 1 45%; border: none; border-radius: 120px; font-weight: bold; font-size: 0.95rem; }
         .btn-grid .full { flex: 1 1 100% !important; }
         .btn-gray { background: #6C6C6C; color: #ffffff; }
-        .btn-red { background: #ffebee; color: #c62828; }
+        .btn-red { background: rgba(255, 0, 0, 0.5); color: white; }
         .btn-white { background: #f2f2f2; color: #444; }
 
         input, select, textarea { 
@@ -421,11 +421,11 @@ background: var(--bg-button) !important;
 
 <div class="calendar-scroll" id="scroller"></div>
 
-<button onclick="jumpToday()" style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff; border: 0px solid #333333; padding: 10px 20px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+<button onclick="jumpToday()" style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
     <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'TODAY' : 'JETZT')</script>
 </button>
 
-<button onclick="openSearch()" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff; border: 0px solid #333333; padding: 10px 20px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+<button onclick="openSearch()" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'FIND' : 'SUCHE')</script>
 </button>
 
@@ -433,10 +433,10 @@ background: var(--bg-button) !important;
     <div class="m-box" style="padding: 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
         <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search' : 'Termine suchen')</script></h3>
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search term' : 'Suchbegriff')</script></label>
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search term' : 'Suchbegriff')</script></label>
         <input type="text" id="s-input" oninput="runSearch()" placeholder="..." style="width: 100%; height: 44px; font-size: 0.9rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 15px; outline: none;">
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Results' : 'Ergebnisse')</script></label>
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Results' : 'Ergebnisse')</script></label>
         <div id="s-results" style="width: 100%; max-height: 200px; overflow-y: auto; font-size: 0.85rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 25px;">
             <p style="color: #666; margin: 0; font-style: italic;">...</p>
         </div>
@@ -447,7 +447,7 @@ background: var(--bg-button) !important;
     </div>
 </div>
 
-<button onclick="openBackup()" style="position: fixed; bottom: 30px; left: 75%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); color: #ffffff; border: 0px solid #333333; padding: 10px 20px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+<button onclick="openBackup()" style="position: fixed; bottom: 30px; left: 75%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
     TOOLS
 </button>
 <div id="m-event" class="modal">
@@ -463,18 +463,18 @@ background: var(--bg-button) !important;
         
         <div style="display: flex; gap: 12px; margin-bottom: 20px;">
             <div style="flex: 1;">
-                <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Start</label>
+                <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Start</label>
                 <input type="date" id="m-start-date" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box; margin-bottom: 6px;">
                 <div id="m-time-start-wrap"><input type="time" id="m-time-start" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box;"></div>
             </div>
             <div style="flex: 1;">
-                <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'End' : 'Ende')</script></label>
+                <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'End' : 'Ende')</script></label>
                 <input type="date" id="m-end-date" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box; margin-bottom: 6px;">
                 <div id="m-time-end-wrap"><input type="time" id="m-time-end" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box;"></div>
             </div>
         </div>
 
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Repeat' : 'Wiederholung')</script></label>
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Repeat' : 'Wiederholung')</script></label>
         <select id="m-rep" style="width: 100%; height: 44px; margin-bottom: 25px; font-size: 16px; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
             <option value="none">-</option>
             <option value="d"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Daily' : 'Täglich')</script></option>
@@ -505,35 +505,47 @@ background: var(--bg-button) !important;
     </div>
 </div>
 
+<style>
+  .m-box::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
 <div id="m-backup" class="modal">
-    <div class="m-box" style="padding: 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+    <div class="m-box" style="padding: 20px; border-radius: 24px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); max-height: 85vh; overflow-y: auto; box-sizing: border-box; -webkit-overflow-scrolling: touch;">
         <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">Tools</h3>
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Backup</label>
-        <textarea id="b-export" readonly style="width: 100%; height: 60px; font-size: 0.8rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px; font-family: monospace;"></textarea>
+        
+        
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Export backup' : 'Backup exportieren')</script></label>
+        <textarea id="b-export" readonly style="width: 100%; height: 32px; font-size: 0.8rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px; font-family: monospace;"></textarea>
         
         <div class="btn-grid" style="margin-bottom: 10px;">
             <button class="btn-white full" onclick="copyB()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Copy' : 'Kopieren')</script></button>
-            <button class="btn-white" onclick="downloadB()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Save' : 'Speichern')</script></button>
-            <button class="btn-red" onclick="clearAllData()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Delete' : 'Löschen')</script></button>
+            <button class="btn-white full" onclick="downloadB()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Save' : 'Speichern')</script></button>
+            
+           
         </div>
         
 
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Recovery' : 'Wiederherstellen')</script></label>
-        <textarea id="b-import" style="width: 100%; height: 60px; font-size: 0.8rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px;" placeholder="Backup..."></textarea>
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Import backup' : 'Backup importieren')</script></label>
+        <textarea id="b-import" style="width: 100%; height: 32px; font-size: 0.8rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px;" placeholder="..."></textarea>
         
         <div class="btn-grid" style="margin-bottom: 10px;">
-            <button class="btn-white full" onclick="importB()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Load' : 'Laden')</script></button>
+            <button class="btn-white full" onclick="importB()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Restore Backup' : 'Wiederherstellen')</script></button>    </div>
+            
+          <div class="btn-grid" style="margin-bottom: 10px;">        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Reset' : 'Zurücksetzen')</script></label>
+             <button class="btn-red full" onclick="clearAllData()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Clear Calendar' : 'Termine löschen')</script></button>
         </div>
         
 
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Event reminder' : 'Terminerinnerung')</script></label>
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Event reminder' : 'Terminerinnerung')</script></label>
         
         <div class="settings-row">
  
-    <select id="reminderTime" style="width: 100%; height: 44px; margin-bottom: 25px; font-size: 16px; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
+    <select id="reminderTime" style="width: 100%; height: 32px; margin-bottom: 25px; font-size: 0.85rem; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
         <option id="opt0" value="0"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'At the event time' : 'Zum Ereigniszeitpunkt')</script></option>
         <option id="opt15" value="15"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '15 minutes' : '15 Minuten vorher')</script></option>
         <option id="opt30" value="30"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '30 minutes' : '30 Minuten vorher')</script></option>
@@ -547,16 +559,47 @@ background: var(--bg-button) !important;
         
 
         
-        <label style="font-size: 0.85rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">Design</label>
+        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">Design</label>
         
-        <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%; height: 44px; margin-bottom: 25px; font-size: 16px; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
+        <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%; height: 32px; margin-bottom: 25px; font-size: 0.85rem; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
             <option value="infinity">Infinity (Standard)</option>
             <option value="aqua">Aqua</option>
             <option value="kiwi">Kiwi</option>
             <option value="lava">Lava</option>
             <option value="mono">Mono</option>
         </select>
+<div class="font-settings" style="display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; margin: 15px 0;">
+    <button onclick="changeFontSize('small')">A-</button>
+    <button onclick="changeFontSize('normal')">Standard</button>
+    <button onclick="changeFontSize('large')">A+</button>
+</div>
 
+<script>
+    // Beim Start der App die gespeicherte Größe automatisch laden
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedSize = localStorage.getItem("user-font-size") || "normal";
+        applyFontSize(savedSize);
+    });
+
+    // Wird aufgerufen, wenn ein Button geklickt wird
+    function changeFontSize(size) {
+        localStorage.setItem("user-font-size", size);
+        applyFontSize(size);
+    }
+
+    // Setzt die Basis-Größe des HTML-Dokuments
+    function applyFontSize(size) {
+        const html = document.documentElement;
+        
+        if (size === 'small') {
+            html.style.fontSize = "80%";
+        } else if (size === 'large') {
+            html.style.fontSize = "120%"; // Vergrößert deine 0.85rem-Schriften deutlich für Barrierefreiheit
+        } else {
+            html.style.fontSize = "100%";
+        }
+    }
+</script>
         <div class="btn-grid">
             <button class="btn-gray full" onclick="closePop()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script></button>
         </div>
