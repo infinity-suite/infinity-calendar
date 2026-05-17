@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+
     <script src="capacitor.js"></script>
     <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
@@ -415,9 +416,74 @@ background: var(--bg-button) !important;
     }
 }
 
+/* 1. Verbietet das Markieren für absolut JEDES Element in der App */
+*, *::before, *::after {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* 2. Erlaubt das Markieren NUR in Eingabefeldern, Textboxen und editierbaren Bereichen */
+input, 
+textarea, 
+[contenteditable="true"] {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
     </style>
+    
 </head>
+
+
+
 <body>
+
+<div id="app-preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease, visibility 0.5s ease; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.35);">
+    
+    <style>
+        .moon-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .moon-emoji {
+            font-size: 2rem;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        /* Animationen für das nacheinander folgende Aufleuchten */
+        .moon-1 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 0.5s forwards; }
+        .moon-2 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 1.3s forwards; }
+        .moon-3 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 2.1s forwards; }
+        .moon-4 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 2.9s forwards; }
+
+        @keyframes moonFadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+    </style>
+
+    <div class="moon-container">
+        <span class="moon-emoji moon-1">🌑</span> <span class="moon-emoji moon-2">🌓</span> <span class="moon-emoji moon-3">🌕</span> <span class="moon-emoji moon-4">🌗</span> </div>
+
+    <p id="preloader-text" style="color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.1rem; font-weight: 500; letter-spacing: 0.8px; margin: 0; text-align: center; max-width: 80%; line-height: 1.4;"></p>
+    
+    <script>
+        var isEn = (navigator.language || navigator.userLanguage).startsWith('en');
+        document.getElementById('preloader-text').innerText = isEn ? 'Calculating moon phases...' : 'Berechne Mondphasen...';
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var preloader = document.getElementById('app-preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }
+            }, 4000); 
+        });
+    </script>
+</div>
 
 <div class="calendar-scroll" id="scroller"></div>
 
@@ -1264,7 +1330,7 @@ function runSearch() {
     
     // Wenn nichts gefunden wurde
     if (gefundeneEvents.length === 0) {
-        resultsContainer.innerHTML = "<p style='color:red; font-size:14px;'>Keine Termine gefunden.</p>";
+        resultsContainer.innerHTML = "<p style='color:red; font-size:14px;'></p>";
         return;
     }
     
