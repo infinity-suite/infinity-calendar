@@ -1,119 +1,130 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
 
     <script src="capacitor.js"></script>
     <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
     <title>Infinity Calendar</title>
     <style>
-    /* Schaltet den Balken für JEDES Element und dessen Unterelemente ab */
-    *, *::before, *::after {
-        -ms-overflow-style: none !important;
-        scrollbar-width: none !important;
-    }
-    
-    *::-webkit-scrollbar,
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        background: transparent !important;
-        opacity: 0 !important;
-    }
-</style>    <style>
-:root, [data-theme="infinity"] {
-    --bg-black: #ffffff;
-    --sidebar-gray: #f2f2f7;
-    --row-light: #ffffff;
-    --row-dark: #fafafc;
-    --today-yellow: #ffb300;
-    --text-main: #1c1c1e;
-    --text-event: #1c1c1e !important;
-    --text-sidebar: #1c1c1e !important;
-    --bg-button: #ffb300;
-}
+        /* Schaltet den Balken für JEDES Element und dessen Unterelemente ab */
+        *,
+        *::before,
+        *::after {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+        }
+
+        *::-webkit-scrollbar,
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            background: transparent !important;
+            opacity: 0 !important;
+        }
+    </style>
+    <style>
+        :root,
+        [data-theme="infinity"] {
+            --bg-black: #ffffff;
+            --sidebar-gray: #f2f2f7;
+            --row-light: #ffffff;
+            --row-dark: #fafafc;
+            --today-yellow: #ffb300;
+            --text-main: #1c1c1e;
+            --text-event: #1c1c1e !important;
+            --text-sidebar: #1c1c1e !important;
+            --bg-button: #ffb300;
+        }
 
 
 
-[data-theme="aqua"] {
-    --bg-black: #ffffff;
-    --sidebar-gray: #f2f2f7;
-    --row-light: #dcf2fd;
-    --row-dark: #bce3f9;
-    --today-yellow: #25ade7;
-    --text-event: #000000 !important;  
-    --text-main: #000000 !important; 
-    --text-sidebar: #000000 !important; 
-    --bg-button: rgba(37, 173, 231, 0.7);
-}
-
-
-
-
-
-[data-theme="mono"] {
-    --bg-black: #ffffff;
-    --sidebar-gray: #f2f2f7;
-    --row-light: #e5e5ea !important;
-    --row-dark: #d1d1d6 !important;
-    --today-yellow: #999999 !important; 
-    --text-event: #000000 !important;  
-    --text-main: #000000 !important; 
-    --text-sidebar: #000000 !important; 
-    --bg-button: rgba(0, 0, 0, 0.7);
-}
-
-
-[data-theme="kiwi"] {
-    --bg-black: #ffffff;
-    --sidebar-gray: #f2f2f7;
-    --row-light: #e1fbc4;
-    --row-dark: #c9efaa;
-    --today-yellow: #00cc44;
-    --text-event: #000000 !important;  
-    --text-main: #000000 !important; 
-    --text-sidebar: #000000 !important; 
-    --bg-button: rgba(46, 125, 50, 0.7);
-}
-
-[data-theme="lava"] {
-    --bg-black: #ffffff;
-    --sidebar-gray: #f2f2f7;
-    --row-light: #ffe5e3;
-    --row-dark: #ffcccc;
-    --today-yellow: #ff3b30;
-    --text-event: #000000 !important;  
-    --text-main: #000000 !important; 
-    --text-sidebar: #000000 !important; 
-    --bg-button: rgba(255, 59, 48, 0.7);
-}
+        [data-theme="aqua"] {
+            --bg-black: #ffffff;
+            --sidebar-gray: #f2f2f7;
+            --row-light: #dcf2fd;
+            --row-dark: #bce3f9;
+            --today-yellow: #25ade7;
+            --text-event: #000000 !important;
+            --text-main: #000000 !important;
+            --text-sidebar: #000000 !important;
+            --bg-button: rgba(37, 173, 231, 0.7);
+        }
 
 
 
 
 
+        [data-theme="mono"] {
+            --bg-black: #ffffff;
+            --sidebar-gray: #f2f2f7;
+            --row-light: #e5e5ea !important;
+            --row-dark: #d1d1d6 !important;
+            --today-yellow: #999999 !important;
+            --text-event: #000000 !important;
+            --text-main: #000000 !important;
+            --text-sidebar: #000000 !important;
+            --bg-button: rgba(0, 0, 0, 0.7);
+        }
 
-        body, html {
-            margin: 0; padding: 0;
-            height: 100%; width: 100%;
+
+        [data-theme="kiwi"] {
+            --bg-black: #ffffff;
+            --sidebar-gray: #f2f2f7;
+            --row-light: #e1fbc4;
+            --row-dark: #c9efaa;
+            --today-yellow: #00cc44;
+            --text-event: #000000 !important;
+            --text-main: #000000 !important;
+            --text-sidebar: #000000 !important;
+            --bg-button: rgba(46, 125, 50, 0.7);
+        }
+
+        [data-theme="lava"] {
+            --bg-black: #ffffff;
+            --sidebar-gray: #f2f2f7;
+            --row-light: #ffe5e3;
+            --row-dark: #ffcccc;
+            --today-yellow: #ff3b30;
+            --text-event: #000000 !important;
+            --text-main: #000000 !important;
+            --text-sidebar: #000000 !important;
+            --bg-button: rgba(255, 59, 48, 0.7);
+        }
+
+
+
+
+
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
             background: var(--bg-black);
             font-family: -apple-system, sans-serif;
             overflow: hidden;
         }
 
-.calendar-scroll {
-    height: 100vh; /* Fallback */
-/* Garantiert volle Höhe ohne schwarzen Balken oben */
-        height: 100dvh !important;
-overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 80px; /* Wichtig, damit man bis ganz unten scrollen kann */
-/* Entfernt den Abstand oben im Querformat */
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-}
+        .calendar-scroll {
+            height: 100vh;
+            /* Fallback */
+            /* Garantiert volle Höhe ohne schwarzen Balken oben */
+            height: 100dvh !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 80px;
+            /* Wichtig, damit man bis ganz unten scrollen kann */
+            /* Entfernt den Abstand oben im Querformat */
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
 
         .month-section {
             display: flex;
@@ -128,19 +139,19 @@ overflow-y: auto !important;
             position: relative;
         }
 
-.sticky-wrapper {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    /* Wir nutzen 100vh, damit der Wrapper den gesamten Sichtbereich abdeckt */
-    height: 100vh; 
-    height: 100dvh; 
-    display: flex;
-    /* Zentriert den Text vertikal im sichtbaren Bereich */
-    align-items: center; 
-    justify-content: center;
-    box-sizing: border-box;
-}
+        .sticky-wrapper {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            /* Wir nutzen 100vh, damit der Wrapper den gesamten Sichtbereich abdeckt */
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            /* Zentriert den Text vertikal im sichtbaren Bereich */
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
 
         .month-label {
             color: var(--text-sidebar) !important;
@@ -153,11 +164,14 @@ overflow-y: auto !important;
             opacity: 0.8;
         }
 
-        .days-container { flex: 1; background: var(--bg-black); }
+        .days-container {
+            flex: 1;
+            background: var(--bg-black);
+        }
 
         .week-separator {
             height: 5px;
-background: var(--sidebar-gray);
+            background: var(--sidebar-gray);
             width: 100%;
         }
 
@@ -170,41 +184,48 @@ background: var(--sidebar-gray);
             align-items: flex-start;
         }
 
-        .day-row:nth-child(even) { background: var(--row-dark); }
-        .day-row.today { background: var(--today-yellow) !important; }
+        .day-row:nth-child(even) {
+            background: var(--row-dark);
+        }
 
-        .date-col { 
-            width: 80px; 
-            color: var(--text-main); 
-            flex-shrink: 0; 
-            display: flex; 
-            align-items: baseline; 
+        .day-row.today {
+            background: var(--today-yellow) !important;
+        }
+
+        .date-col {
+            width: 80px;
+            color: var(--text-main);
+            flex-shrink: 0;
+            display: flex;
+            align-items: baseline;
             gap: 5px;
         }
-        
-        .date-number, .date-day { 
-            font-weight: 400; 
-            font-size: 0.8rem; 
-            line-height: 1.4; 
+
+        .date-number,
+        .date-day {
+            font-weight: 400;
+            font-size: 0.8rem;
+            line-height: 1.4;
         }
 
         /* Styling für Samstag und Sonntag (Zahl und Text) */
-        .we .date-number, .we .date-day { 
-            font-style: italic; 
-            opacity: 0.45; 
+        .we .date-number,
+        .we .date-day {
+            font-style: italic;
+            opacity: 0.45;
         }
 
-        .event-col { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 4px; 
+        .event-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
             justify-content: flex-start;
         }
-        
-        .event-item { 
-color: var(--text-event);
-            cursor: pointer; 
+
+        .event-item {
+            color: var(--text-event);
+            cursor: pointer;
             line-height: 1.4;
             font-size: 0.8rem;
             font-weight: 700;
@@ -212,91 +233,147 @@ color: var(--text-event);
         }
 
         .f-btn {
-    position: fixed; 
-    width: 65px; 
-    height: 65px; 
-    border-radius: 50%; /* Hier von 22px auf 50% ändern */
-background: var(--bg-button) !important;
-    color: white; 
-    border: none;
-    font-weight: bold; 
-    z-index: 100; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-/* Sorgt dafür, dass alles hinter dem Button leicht verschwimmt (Edel-Look) */
-    backdrop-filter: blur(4px); 
-    -webkit-backdrop-filter: blur(4px);
-}
-        .b-today { bottom: 25px; left: 20px; }
-        .b-back { bottom: 25px; right: 20px; }
+            position: fixed;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            /* Hier von 22px auf 50% ändern */
+            background: var(--bg-button) !important;
+            color: white;
+            border: none;
+            font-weight: bold;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            /* Sorgt dafür, dass alles hinter dem Button leicht verschwimmt (Edel-Look) */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .b-today {
+            bottom: 25px;
+            left: 20px;
+        }
+
+        .b-back {
+            bottom: 25px;
+            right: 20px;
+        }
 
         .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 200; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
             backdrop-filter: blur(4px);
         }
+
         /* Fix für die Datums-Zeile im Pop-up */
-.m-box > div[style*="display:flex"] {
-    flex-direction: column !important; /* Stapelt Start und Ende untereinander */
-    gap: 15px !important;
-}
-
-/* Verhindert, dass Datum und Zeit in einer Zeile gequetscht werden */
-#m-time-start-wrap, #m-time-end-wrap {
-    margin-top: 5px;
-}
-
-/* Alle Felder exakt gleich breit und kompakt */
-.m-box input[type="text"],
-.m-box input[type="date"],
-.m-box input[type="time"],
-.m-box select {
-    width: 100% !important;
-    /* Verhindert, dass die Boxen wegen Padding unterschiedlich breit werden */
-    box-sizing: border-box !important; 
-    /* Reduziert die Höhe auf ein normales Maß */
-    height: 40px !important; 
-    padding: 5px 10px !important;
-    margin: 5px 0 !important;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background: #ffffff;
-    font-size: 16px;
-    display: block;
-    /* Entfernt spezielle iPhone-Stylings, die Boxen verzerren */
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-/* Spezieller Fix für das Select-Feld (Wiederholung), damit es nicht höher ist */
-.m-box select {
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20width%3D"292.4"%20height%3D"292.4"><path%20fill%3D"%23666"%20d%3D"M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z"%2F><%2Fsvg>');
-    background-repeat: no-repeat;
-    background-position: right 10px top 50%;
-    background-size: 12px auto;
-    padding-right: 30px !important;
-}
-
-
-/* Macht die Titel "Neu", "Termin" und "Backup" weiß */
-.m-box h3 {
-    color: #ffffff; 
-    margin-top: 0;
-}
-        .btn-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .btn-grid button { height: 40px; flex: 1 1 45%; border: none; border-radius: 120px; font-weight: bold; font-size: 0.95rem; }
-        .btn-grid .full { flex: 1 1 100% !important; }
-        .btn-gray { background: #6C6C6C; color: #ffffff; }
-        .btn-red { background: rgba(255, 0, 0, 0.5); color: white; }
-        .btn-white { background: #f2f2f2; color: #444; }
-
-        input, select, textarea { 
-            width: 100%; padding: 12px; margin: 5px 0; border-radius: 10px; 
-            border: 1px solid #ddd; background: #fff; box-sizing: border-box; font-size: 1rem; 
+        .m-box>div[style*="display:flex"] {
+            flex-direction: column !important;
+            /* Stapelt Start und Ende untereinander */
+            gap: 15px !important;
         }
-        
+
+        /* Verhindert, dass Datum und Zeit in einer Zeile gequetscht werden */
+        #m-time-start-wrap,
+        #m-time-end-wrap {
+            margin-top: 5px;
+        }
+
+        /* Alle Felder exakt gleich breit und kompakt */
+        .m-box input[type="text"],
+        .m-box input[type="date"],
+        .m-box input[type="time"],
+        .m-box select {
+            width: 100% !important;
+            /* Verhindert, dass die Boxen wegen Padding unterschiedlich breit werden */
+            box-sizing: border-box !important;
+            /* Reduziert die Höhe auf ein normales Maß */
+            height: 40px !important;
+            padding: 5px 10px !important;
+            margin: 5px 0 !important;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: #ffffff;
+            font-size: 16px;
+            display: block;
+            /* Entfernt spezielle iPhone-Stylings, die Boxen verzerren */
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        /* Spezieller Fix für das Select-Feld (Wiederholung), damit es nicht höher ist */
+        .m-box select {
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20width%3D"292.4"%20height%3D"292.4"><path%20fill%3D"%23666"%20d%3D"M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z"%2F><%2Fsvg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px auto;
+            padding-right: 30px !important;
+        }
+
+
+        /* Macht die Titel "Neu", "Termin" und "Backup" weiß */
+        .m-box h3 {
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        .btn-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-grid button {
+            height: 40px;
+            flex: 1 1 45%;
+            border: none;
+            border-radius: 120px;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .btn-grid .full {
+            flex: 1 1 100% !important;
+        }
+
+        .btn-gray {
+            background: #6C6C6C;
+            color: #ffffff;
+        }
+
+        .btn-red {
+            background: rgba(255, 0, 0, 0.5);
+            color: white;
+        }
+
+        .btn-white {
+            background: #f2f2f2;
+            color: #444;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: #fff;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
         .check-row {
             display: flex;
             align-items: center;
@@ -305,422 +382,700 @@ background: var(--bg-button) !important;
             padding: 5px 0;
             cursor: pointer;
         }
-        .check-row input { width: 22px; height: 22px; margin: 0; cursor: pointer; }
-        .check-row span { font-size: 1rem; color: #ffffff; font-weight: 500; }
 
-        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        .check-row input {
+            width: 22px;
+            height: 22px;
+            margin: 0;
+            cursor: pointer;
+        }
 
-@media (prefers-color-scheme: dark)   {
+        .check-row span {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
 
-:root, [data-theme="infinity"] {
-    --bg-black: #000000;
-    --sidebar-gray: #121212;
-    --row-light: #241a12;
-    --row-dark: #140e0a;
-    --today-yellow: #d65a00;
-    --text-main: #ffffff !important;
-    --text-event: #ffffff !important;
-    --text-sidebar: #888888!important;
-    --bg-button: rgba(50, 32, 20, 0.9);
-}
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
 
+        @media (prefers-color-scheme: dark) {
 
-
-[data-theme="aqua"] {
-    --bg-black: #000000;
-    --sidebar-gray: #121212;
-    --row-light: #13222d;  
-    --row-dark: #0b151c;  
-    --today-yellow: #00a1f1;  
-    --text-main: #ffffff !important;
-    --text-event: #ffffff !important;
-    --text-sidebar: #888888!important;
-    --bg-button: rgba(14, 45, 65, 0.9); 
-}
-
-    [data-theme="kiwi"] {
-        --bg-black: #000000;
-        --sidebar-gray: #121212;
-        --row-light: #1D2619;
-        --row-dark: #161D12;
-        --today-yellow: #1db94c;
-    --text-main: #ffffff!important;
-    --text-event: #ffffff!important;
-    --text-sidebar: #888888!important;
-        --bg-button: rgba(20, 50, 20, 0.9);
-    }
-
-[data-theme="mono"] {
-    --bg-black: #000000;
-    --sidebar-gray: #121212 !important;
-    --row-light: #1c1c1e !important;
-    --row-dark: #111111 !important;
-    --today-yellow: #3a3a3c;
-    --text-main: #ffffff !important;
-    --text-event: #ffffff !important;
-    --text-sidebar: #888888 !important;
-    --bg-button: rgba(4c, 4c, 50, 0.9);
-}
-
-[data-theme="lava"] {
-    --bg-black: #000000;
-    --sidebar-gray: #121212;
-    --row-light: #241414;     
-    --row-dark: #140a0a;   
-    --today-yellow: #ff453a;  
-    --text-main: #ffffff !important;
-    --text-event: #ffffff !important;
-    --text-sidebar: #888888!important;  
-    --bg-button: rgba(50, 20, 20, 0.9); 
-}
-
- 
-
- 
-}
+            :root,
+            [data-theme="infinity"] {
+                --bg-black: #000000;
+                --sidebar-gray: #121212;
+                --row-light: #241a12;
+                --row-dark: #140e0a;
+                --today-yellow: #d65a00;
+                --text-main: #ffffff !important;
+                --text-event: #ffffff !important;
+                --text-sidebar: #888888 !important;
+                --bg-button: rgba(50, 32, 20, 0.9);
+            }
 
 
-/* Nur aktiv, wenn das Handy quer liegt */
-@media (orientation: landscape) {
-    .month-rail {
-        /* Erhöht die Breite der grauen Schiene um den Platz der Notch */
-        width: calc(45px + env(safe-area-inset-left)) !important;
-        /* Schiebt den Inhalt aus dem toten Winkel der Notch */
-        padding-left: env(safe-area-inset-left) !important;
-    }
 
-    .sticky-wrapper {
-        /* Zentriert den Monatsnamen wieder in der nun breiteren Schiene */
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
+            [data-theme="aqua"] {
+                --bg-black: #000000;
+                --sidebar-gray: #121212;
+                --row-light: #13222d;
+                --row-dark: #0b151c;
+                --today-yellow: #00a1f1;
+                --text-main: #ffffff !important;
+                --text-event: #ffffff !important;
+                --text-sidebar: #888888 !important;
+                --bg-button: rgba(14, 45, 65, 0.9);
+            }
 
-    .days-container {
-        /* Verhindert, dass die Zeilen rechts unter der Rundung verschwinden */
-        padding-right: env(safe-area-inset-right) !important;
-    }
-}
+            [data-theme="kiwi"] {
+                --bg-black: #000000;
+                --sidebar-gray: #121212;
+                --row-light: #1D2619;
+                --row-dark: #161D12;
+                --today-yellow: #1db94c;
+                --text-main: #ffffff !important;
+                --text-event: #ffffff !important;
+                --text-sidebar: #888888 !important;
+                --bg-button: rgba(20, 50, 20, 0.9);
+            }
 
-/* Nur aktiv im Querformat */
-@media (orientation: landscape) {
-    .m-box {
-        /* Nutzt fast die gesamte Höhe, lässt aber oben/unten 5% Platz */
-        max-height: 90vh !important; 
-        padding: 15px !important; /* Weniger Abstand innen */
-        overflow-y: auto !important; /* Macht das Pop-up in sich scrollbar */
-    }
+            [data-theme="mono"] {
+                --bg-black: #000000;
+                --sidebar-gray: #121212 !important;
+                --row-light: #1c1c1e !important;
+                --row-dark: #111111 !important;
+                --today-yellow: #3a3a3c;
+                --text-main: #ffffff !important;
+                --text-event: #ffffff !important;
+                --text-sidebar: #888888 !important;
+                --bg-button: rgba(4c, 4c, 50, 0.9);
+            }
 
-    .m-box h3 {
-        margin-bottom: 10px !important;
-        font-size: 1.2rem !important; /* Titel etwas kleiner */
-    }
+            [data-theme="lava"] {
+                --bg-black: #000000;
+                --sidebar-gray: #121212;
+                --row-light: #241414;
+                --row-dark: #140a0a;
+                --today-yellow: #ff453a;
+                --text-main: #ffffff !important;
+                --text-event: #ffffff !important;
+                --text-sidebar: #888888 !important;
+                --bg-button: rgba(50, 20, 20, 0.9);
+            }
 
-    /* Macht die Eingabefelder im Querformat flacher */
-    .m-box input[type="text"],
-    .m-box input[type="date"],
-    .m-box input[type="time"],
-    .m-box select {
-        height: 35px !important; 
-        margin: 4px 0 !important;
-    }
 
-    /* Die Buttons rücken näher zusammen */
-    .m-box button {
-        margin-top: 10px !important;
-        padding: 10px !important;
-    }
-}
 
-/* 1. Verbietet das Markieren für absolut JEDES Element in der App */
-*, *::before, *::after {
-    -webkit-user-select: none;
-    user-select: none;
-}
 
-/* 2. Erlaubt das Markieren NUR in Eingabefeldern, Textboxen und editierbaren Bereichen */
-input, 
-textarea, 
-[contenteditable="true"] {
-    -webkit-user-select: text !important;
-    user-select: text !important;
-}
+        }
 
+
+        /* Nur aktiv, wenn das Handy quer liegt */
+        @media (orientation: landscape) {
+            .month-rail {
+                /* Erhöht die Breite der grauen Schiene um den Platz der Notch */
+                width: calc(45px + env(safe-area-inset-left)) !important;
+                /* Schiebt den Inhalt aus dem toten Winkel der Notch */
+                padding-left: env(safe-area-inset-left) !important;
+            }
+
+            .sticky-wrapper {
+                /* Zentriert den Monatsnamen wieder in der nun breiteren Schiene */
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .days-container {
+                /* Verhindert, dass die Zeilen rechts unter der Rundung verschwinden */
+                padding-right: env(safe-area-inset-right) !important;
+            }
+        }
+
+        /* Nur aktiv im Querformat */
+        @media (orientation: landscape) {
+            .m-box {
+                /* Nutzt fast die gesamte Höhe, lässt aber oben/unten 5% Platz */
+                max-height: 90vh !important;
+                padding: 15px !important;
+                /* Weniger Abstand innen */
+                overflow-y: auto !important;
+                /* Macht das Pop-up in sich scrollbar */
+            }
+
+            .m-box h3 {
+                margin-bottom: 10px !important;
+                font-size: 1.2rem !important;
+                /* Titel etwas kleiner */
+            }
+
+            /* Macht die Eingabefelder im Querformat flacher */
+            .m-box input[type="text"],
+            .m-box input[type="date"],
+            .m-box input[type="time"],
+            .m-box select {
+                height: 35px !important;
+                margin: 4px 0 !important;
+            }
+
+            /* Die Buttons rücken näher zusammen */
+            .m-box button {
+                margin-top: 10px !important;
+                padding: 10px !important;
+            }
+        }
+
+        /* 1. Verbietet das Markieren für absolut JEDES Element in der App */
+        *,
+        *::before,
+        *::after {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 2. Erlaubt das Markieren NUR in Eingabefeldern, Textboxen und editierbaren Bereichen */
+        input,
+        textarea,
+        [contenteditable="true"] {
+            -webkit-user-select: text !important;
+            user-select: text !important;
+        }
     </style>
-    
+
 </head>
 
 
 
 <body>
 
-<div id="app-preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease, visibility 0.5s ease; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.35);">
-    
+    <div id="app-preloader"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease, visibility 0.5s ease; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); background-color: rgba(0, 0, 0, 0.35);">
+
+        <style>
+            .moon-container {
+                display: flex;
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+
+            .moon-emoji {
+                font-size: 2rem;
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            /* Animationen für das nacheinander folgende Aufleuchten */
+            .moon-1 {
+                animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 0.5s forwards;
+            }
+
+            .moon-2 {
+                animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 1.3s forwards;
+            }
+
+            .moon-3 {
+                animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 2.1s forwards;
+            }
+
+            .moon-4 {
+                animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 2.9s forwards;
+            }
+
+            @keyframes moonFadeIn {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+            }
+        </style>
+
+        <div class="moon-container">
+            <span class="moon-emoji moon-1">🌑</span> <span class="moon-emoji moon-2">🌓</span> <span
+                class="moon-emoji moon-3">🌕</span> <span class="moon-emoji moon-4">🌗</span>
+        </div>
+
+        <p id="preloader-text"
+            style="color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.1rem; font-weight: 500; letter-spacing: 0.8px; margin: 0; text-align: center; max-width: 80%; line-height: 1.4;">
+        </p>
+
+        <script>
+
+            // --- ALLE BENACHRICHTIGUNGEN DER APP AUF EINMAL LÖSCHEN ---
+            async function loescheAlleNotifications() {
+                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+                    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+                    try {
+                        // 1. Bereits auf dem Bildschirm angezeigte Mitteilungen wegräumen
+                        await LocalNotifications.removeAllDeliveredNotifications();
+
+                        // 2. Die Liste aller zukünftigen, geplanten Wecker holen
+                        const pending = await LocalNotifications.getPending();
+
+                        // 3. Nur wenn wirklich Wecker geplant sind, löschen wir sie gezielt
+                        if (pending && pending.notifications && pending.notifications.length > 0) {
+                            await LocalNotifications.cancel({ notifications: pending.notifications });
+                        }
+
+                        console.log("Alle geplanten iOS-Benachrichtigungen wurden gelöscht.");
+                    } catch (error) {
+                        console.error("Fehler beim Löschen aller Notifications:", error);
+                    }
+                }
+            }
+
+            var isEn = (navigator.language || navigator.userLanguage).startsWith('en');
+            document.getElementById('preloader-text').innerText = isEn ? 'Calculating moon phases...' : 'Berechne Mondphasen...';
+
+            window.addEventListener('load', function () {
+                setTimeout(function () {
+                    var preloader = document.getElementById('app-preloader');
+                    if (preloader) {
+                        preloader.style.opacity = '0';
+                        preloader.style.visibility = 'hidden';
+                    }
+                }, 4000);
+            });
+        </script>
+    </div>
+
+    <div class="calendar-scroll" id="scroller"></div>
+
+    <button onclick="jumpToday()"
+        style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'TODAY' : 'JETZT')</script>
+    </button>
+
+    <button onclick="openSearch()"
+        style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'FIND' : 'SUCHE')</script>
+    </button>
+
+    <div id="m-search" class="modal">
+    <div class="m-box"
+     style="padding: 20px; border-radius: 24px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); width: clamp(290px, 85vw, 450px); max-height: 85vh; overflow-y: auto; box-sizing: border-box; -webkit-overflow-scrolling: touch;">
+     <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search' : 'Termine suchen')</script>
+            </h3>
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search term' : 'Suchbegriff')</script>
+            </label>
+            <input type="text" id="s-input" oninput="runSearch()" placeholder="..."
+                style="width: 100%; height: 44px; font-size: 0.9rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 15px; outline: none;">
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Results' : 'Ergebnisse')</script>
+            </label>
+            <div id="s-results"
+                style="width: 100%; max-height: 200px; overflow-y: auto; font-size: 0.85rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 25px;">
+                <p style="color: #666; margin: 0; font-style: italic;">...</p>
+            </div>
+
+            <div class="btn-grid">
+                <button class="btn-gray full" onclick="document.getElementById('m-search').style.display='none'">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="openBackup()"
+        style="position: fixed; bottom: 30px; left: 75%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+        TOOLS
+    </button>
+    <div id="m-event" class="modal">
+        <div class="m-box"
+            style="padding: 20px; border-radius: 24px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); width: clamp(290px, 85vw, 450px); max-height: 85vh; overflow-y: auto; box-sizing: border-box; -webkit-overflow-scrolling: touch;">
+            <h3 id="m-title"
+                style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">
+                Termin</h3>
+
+            <input type="text" id="m-text" placeholder="Name"
+                style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 12px; box-sizing: border-box; margin-bottom: 15px;">
+
+            <div class="check-row" id="toggle-trigger"
+                style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: #ffffff; font-size: 1rem;">
+                <input type="checkbox" id="m-all" style="width: 20px; height: 20px; accent-color: var(--text-main);">
+                <span>
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '24h' : 'Ganztägig')</script>
+                </span>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                <div style="flex: 1;">
+                    <label
+                        style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Start</label>
+                    <input type="date" id="m-start-date"
+                        style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box; margin-bottom: 6px;">
+                    <div id="m-time-start-wrap"><input type="time" id="m-time-start"
+                            style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box;">
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <label
+                        style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'End' : 'Ende')</script>
+                    </label>
+                    <input type="date" id="m-end-date"
+                        style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box; margin-bottom: 6px;">
+                    <div id="m-time-end-wrap"><input type="time" id="m-time-end"
+                            style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box;">
+                    </div>
+                </div>
+            </div>
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Repeat' : 'Wiederholung')</script>
+            </label>
+            <select id="m-rep"
+                style="width: 100%; height: 44px; margin-bottom: 25px; font-size: 16px; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
+                <option value="none">-</option>
+                <option value="d">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Daily' : 'Täglich')</script>
+                </option>
+                <option value="w">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Weekly' : 'Wöchentlich')</script>
+                </option>
+                <option value="m">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Monthly' : 'Monatlich')</script>
+                </option>
+                <option value="y">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Yearly' : 'Jährlich')</script>
+                </option>
+            </select>
+
+            <div class="btn-grid">
+                <button class="btn-white" onclick="save()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Save' : 'Speichern')</script>
+                </button>
+                <button id="m-del" class="btn-red" style="display:none" onclick="showDeleteOptions()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Delete' : 'Löschen')</script>
+                </button>
+                <button class="btn-gray full" onclick="closePop()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Cancel' : 'Abbrechen')</script>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="m-del-confirm" class="modal">
+        <div class="m-box"
+            style="padding: 24px 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); text-align: center;">
+            <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 1.3rem; color: #ffffff;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Delete' : 'Löschen')</script>
+            </h3>
+
+            <p style="color: #e0e0e0; font-size: 1rem; margin-top: 0; margin-bottom: 25px; line-height: 1.4;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Series or only this day?' : 'Serie oder nur diesen Tag?')</script>
+            </p>
+
+            <div class="btn-grid">
+                <button class="btn-red" onclick="delSingle()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'This day' : 'Nur diesen')</script>
+                </button>
+                <button class="btn-red" onclick="delSerie()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Series' : 'Ganze Serie')</script>
+                </button>
+
+                <button class="btn-gray full" onclick="hideDeleteOptions()" style="margin-top: 5px;">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Cancel' : 'Abbrechen')</script>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <style>
-        .moon-container {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .moon-emoji {
-            font-size: 2rem;
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        /* Animationen für das nacheinander folgende Aufleuchten */
-        .moon-1 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 0.5s forwards; }
-        .moon-2 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 1.3s forwards; }
-        .moon-3 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 2.1s forwards; }
-        .moon-4 { animation: moonFadeIn 0.6s cubic-bezier(0.1, 0.6, 0.2, 1) 2.9s forwards; }
-
-        @keyframes moonFadeIn {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.1); }
+        .m-box::-webkit-scrollbar {
+            display: none;
         }
     </style>
 
-    <div class="moon-container">
-        <span class="moon-emoji moon-1">🌑</span> <span class="moon-emoji moon-2">🌓</span> <span class="moon-emoji moon-3">🌕</span> <span class="moon-emoji moon-4">🌗</span> </div>
+    <div id="m-backup" class="modal">
+       <div class="m-box"
+     style="padding: 20px; border-radius: 24px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); width: clamp(290px, 85vw, 450px); max-height: 85vh; overflow-y: auto; box-sizing: border-box; -webkit-overflow-scrolling: touch;">            <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">Tools
+            </h3>
 
-    <p id="preloader-text" style="color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1.1rem; font-weight: 500; letter-spacing: 0.8px; margin: 0; text-align: center; max-width: 80%; line-height: 1.4;"></p>
-    
-    <script>
-        var isEn = (navigator.language || navigator.userLanguage).startsWith('en');
-        document.getElementById('preloader-text').innerText = isEn ? 'Calculating moon phases...' : 'Berechne Mondphasen...';
 
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                var preloader = document.getElementById('app-preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Export backup' : 'Backup exportieren')</script>
+            </label>
+            <textarea id="b-export" readonly
+                style="width: 100%; height: 32px; font-size: 0.8rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px; font-family: monospace;"></textarea>
+
+            <div class="btn-grid" style="margin-bottom: 10px;">
+                <button class="btn-white full" onclick="copyB()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Copy' : 'Kopieren')</script>
+                </button>
+                <button class="btn-white full" onclick="downloadB()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Save' : 'Speichern')</script>
+                </button>
+
+
+            </div>
+
+
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Import backup' : 'Backup importieren')</script>
+            </label>
+            <textarea id="b-import"
+                style="width: 100%; height: 32px; font-size: 0.8rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px;"
+                placeholder="..."></textarea>
+
+            <div class="btn-grid" style="margin-bottom: 10px;">
+                <button class="btn-white full" onclick="importB()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Restore Backup' : 'Wiederherstellen')</script>
+                </button>
+            </div>
+
+            <div class="btn-grid" style="margin-bottom: 10px;"> <label
+                    style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Reset' : 'Zurücksetzen')</script>
+                </label>
+                <button class="btn-red full" onclick="clearAllData()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Clear Calendar' : 'Termine löschen')</script>
+                </button>
+            </div>
+
+
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Event reminder' : 'Terminerinnerung')</script>
+            </label>
+
+            <div class="settings-row">
+
+                <select id="reminderTime"
+                    style="width: 100%; height: 32px; margin-bottom: 25px; font-size: 0.85rem; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
+                    <option id="opt0" value="0">
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'At the event time' : 'Zum Ereigniszeitpunkt')</script>
+                    </option>
+                    <option id="opt15" value="15">
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '15 minutes' : '15 Minuten vorher')</script>
+                    </option>
+                    <option id="opt30" value="30">
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '30 minutes' : '30 Minuten vorher')</script>
+                    </option>
+                    <option id="opt60" value="60">
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '1 hour' : '1 Stunde vorher')</script>
+                    </option>
+                    <option id="opt120" value="120" selected>
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '2 hours' : '2 Stunden vorher')</script>
+                    </option>
+                    <option id="opt1440" value="1440">
+                        <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '1 day' : '1 Tag vorher')</script>
+                    </option>
+                </select>
+            </div>
+
+
+
+
+
+            <label
+                style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">Design</label>
+
+            <select id="theme-select" onchange="changeTheme(this.value)"
+                style="width: 100%; height: 32px; margin-bottom: 25px; font-size: 0.85rem; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
+                <option value="infinity">Infinity (Standard)</option>
+                <option value="aqua">Aqua</option>
+                <option value="kiwi">Kiwi</option>
+                <option value="lava">Lava</option>
+                <option value="mono">Mono</option>
+            </select>
+            <div class="font-settings"
+                style="display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; margin: 15px 0;">
+                <button onclick="changeFontSize('small')">A-</button>
+                <button onclick="changeFontSize('normal')">Standard</button>
+                <button onclick="changeFontSize('large')">A+</button>
+            </div>
+
+            <script>
+                // Beim Start der App die gespeicherte Größe automatisch laden
+                document.addEventListener("DOMContentLoaded", () => {
+                    const savedSize = localStorage.getItem("user-font-size") || "normal";
+                    applyFontSize(savedSize);
+                });
+
+                document.addEventListener("resume", () => {
+                    console.log("System-Signal: App ist wieder voll im laufenden Betrieb!");
+
+                    setTimeout(() => {
+                        loaded = [];
+                        renderedDays = [];
+                        if (scroller) {
+                            scroller.innerHTML = '';
+                        }
+                        init(); // Startet das Neuzeichnen mit frischem Datum
+                        console.log("Kalender wurde im laufenden Betrieb aktualisiert!");
+                    }, 100);
+                }, false);
+
+                // --- UND HIER GEHT ES DANN MIT DEINER INIT-FUNKTION WEITER ---
+                function init() {
+                    const now = new Date();
+                    for (let i = -2; i <= 15; i++) renderMonth(now.getFullYear(), now.getMonth() + i);
+
+                    // ... hier drunter steht noch unser Notification-Check fürs Backup ...
+                    setTimeout(jumpToday, 100);
                 }
-            }, 4000); 
-        });
-    </script>
-</div>
 
-<div class="calendar-scroll" id="scroller"></div>
+                // Variable zum Merken des aktuellen Weckers (ganz wichtig gegen Verdopplung!)
+                let mitternachtsTimerId = null;
 
-<button onclick="jumpToday()" style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
-    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'TODAY' : 'JETZT')</script>
-</button>
+                // --- MITTERNACHTS-CHECK IM LAUFENDEN BETRIEB ---
+                function starteMitternachtsTimer() {
+                    // Falls schon ein Timer läuft, löschen wir ihn jetzt zuerst
+                    if (mitternachtsTimerId) {
+                        clearTimeout(mitternachtsTimerId);
+                    }
 
-<button onclick="openSearch()" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
-   <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'FIND' : 'SUCHE')</script>
-</button>
+                    const jetzt = new Date();
 
-<div id="m-search" class="modal">
-    <div class="m-box" style="padding: 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
-        <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search' : 'Termine suchen')</script></h3>
-        
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Search term' : 'Suchbegriff')</script></label>
-        <input type="text" id="s-input" oninput="runSearch()" placeholder="..." style="width: 100%; height: 44px; font-size: 0.9rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 15px; outline: none;">
-        
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Results' : 'Ergebnisse')</script></label>
-        <div id="s-results" style="width: 100%; max-height: 200px; overflow-y: auto; font-size: 0.85rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; margin-bottom: 25px;">
-            <p style="color: #666; margin: 0; font-style: italic;">...</p>
-        </div>
-        
-        <div class="btn-grid">
-            <button class="btn-gray full" onclick="document.getElementById('m-search').style.display='none'"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script></button>
-        </div>
-    </div>
-</div>
+                    // Wir berechnen den morgigen Tag um exakt 00:00:01 Uhr (mit 1 Sekunde Puffer)
+                    const morgen = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate() + 1, 0, 0, 1);
 
-<button onclick="openBackup()" style="position: fixed; bottom: 30px; left: 75%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
-    TOOLS
-</button>
-<div id="m-event" class="modal">
-    <div class="m-box" style="padding: 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
-        <h3 id="m-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">Termin</h3>
-        
-        <input type="text" id="m-text" placeholder="Name" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 12px; box-sizing: border-box; margin-bottom: 15px;">
-        
-        <div class="check-row" id="toggle-trigger" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: #ffffff; font-size: 1rem;">
-            <input type="checkbox" id="m-all" style="width: 20px; height: 20px; accent-color: var(--text-main);">
-            <span><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '24h' : 'Ganztägig')</script></span>
-        </div>
-        
-        <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-            <div style="flex: 1;">
-                <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Start</label>
-                <input type="date" id="m-start-date" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box; margin-bottom: 6px;">
-                <div id="m-time-start-wrap"><input type="time" id="m-time-start" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box;"></div>
+                    // Differenz in Millisekunden berechnen
+                    const zeitBisMitternacht = morgen.getTime() - jetzt.getTime();
+
+                    console.log("Mitternachts-Timer läuft. Live-Wechsel in " + Math.round(zeitBisMitternacht / 1000) + " Sekunden.");
+
+                    // Wecker für Mitternacht stellen und die ID speichern
+                    mitternachtsTimerId = setTimeout(() => {
+                        console.log("Es ist Mitternacht! Aktualisiere Kalender live...");
+
+                        // Kalender im laufenden Betrieb neu zeichnen
+                        loaded = [];
+                        renderedDays = [];
+                        if (scroller) {
+                            scroller.innerHTML = '';
+                        }
+                        init();
+                    }, zeitBisMitternacht);
+                }
+
+                // Wird aufgerufen, wenn ein Button geklickt wird
+                function changeFontSize(size) {
+                    localStorage.setItem("user-font-size", size);
+                    applyFontSize(size);
+                }
+
+                // Setzt die Basis-Größe des HTML-Dokuments
+                function applyFontSize(size) {
+                    const html = document.documentElement;
+
+                    if (size === 'small') {
+                        html.style.fontSize = "80%";
+                    } else if (size === 'large') {
+                        html.style.fontSize = "120%"; // Vergrößert deine 0.85rem-Schriften deutlich für Barrierefreiheit
+                    } else {
+                        html.style.fontSize = "100%";
+                    }
+                }
+            </script>
+            <div class="btn-grid">
+                <button class="btn-gray full" onclick="closePop()">
+                    <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script>
+                </button>
             </div>
-            <div style="flex: 1;">
-                <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'End' : 'Ende')</script></label>
-                <input type="date" id="m-end-date" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box; margin-bottom: 6px;">
-                <div id="m-time-end-wrap"><input type="time" id="m-time-end" style="width: 100%; height: 44px; font-size: 16px; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 0 10px; box-sizing: border-box;"></div>
-            </div>
-        </div>
-
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Repeat' : 'Wiederholung')</script></label>
-        <select id="m-rep" style="width: 100%; height: 44px; margin-bottom: 25px; font-size: 16px; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
-            <option value="none">-</option>
-            <option value="d"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Daily' : 'Täglich')</script></option>
-            <option value="w"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Weekly' : 'Wöchentlich')</script></option>
-            <option value="m"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Monthly' : 'Monatlich')</script></option>
-            <option value="y"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Yearly' : 'Jährlich')</script></option>
-        </select>
-        
-        <div class="btn-grid">
-            <button class="btn-white" onclick="save()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Save' : 'Speichern')</script></button>
-            <button id="m-del" class="btn-red" style="display:none" onclick="showDeleteOptions()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Delete' : 'Löschen')</script></button>
-            <button class="btn-gray full" onclick="closePop()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Cancel' : 'Abbrechen')</script></button>
         </div>
     </div>
-</div>
-<div id="m-del-confirm" class="modal">
-    <div class="m-box" style="padding: 24px 20px; border-radius: 16px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); text-align: center;">
-        <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 1.3rem; color: #ffffff;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Delete' : 'Löschen')</script></h3>
-        
-        <p style="color: #e0e0e0; font-size: 1rem; margin-top: 0; margin-bottom: 25px; line-height: 1.4;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Series or only this day?' : 'Serie oder nur diesen Tag?')</script></p>
-        
-        <div class="btn-grid">
-            <button class="btn-red" onclick="delSingle()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'This day' : 'Nur diesen')</script></button>
-            <button class="btn-red" onclick="delSerie()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Series' : 'Ganze Serie')</script></button>
-            
-            <button class="btn-gray full" onclick="hideDeleteOptions()" style="margin-top: 5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Cancel' : 'Abbrechen')</script></button>
-        </div>
-    </div>
-</div>
+    <script>
+        const STORAGE_KEY = 'inf_v47';
+        const EX_KEY = 'inf_v47_ex';
 
-<style>
-  .m-box::-webkit-scrollbar {
-    display: none;
-  }
-</style>
+        let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let exceptions = JSON.parse(localStorage.getItem(EX_KEY)) || [];
+        let curId = null, curSelectedDate = null, loaded = [], renderedDays = [];
+        const scroller = document.getElementById('scroller');
 
-<div id="m-backup" class="modal">
-    <div class="m-box" style="padding: 20px; border-radius: 24px; background: #1e1e1e; box-shadow: 0 8px 32px rgba(0,0,0,0.5); max-height: 85vh; overflow-y: auto; box-sizing: border-box; -webkit-overflow-scrolling: touch;">
-        <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 1.3rem; color: #ffffff; text-align: center;">Tools</h3>
-        
-        
-        
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Export backup' : 'Backup exportieren')</script></label>
-        <textarea id="b-export" readonly style="width: 100%; height: 32px; font-size: 0.8rem; color: #ccc; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px; font-family: monospace;"></textarea>
-        
-        <div class="btn-grid" style="margin-bottom: 10px;">
-            <button class="btn-white full" onclick="copyB()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Copy' : 'Kopieren')</script></button>
-            <button class="btn-white full" onclick="downloadB()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Save' : 'Speichern')</script></button>
-            
-           
-        </div>
-        
+        document.getElementById('toggle-trigger').onclick = function (e) {
+            const cb = document.getElementById('m-all');
+            if (e.target !== cb) cb.checked = !cb.checked;
+            toggleT();
+        };
 
-        
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Import backup' : 'Backup importieren')</script></label>
-        <textarea id="b-import" style="width: 100%; height: 32px; font-size: 0.8rem; color: #ffffff; background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px; box-sizing: border-box; resize: none; margin-bottom: 1px;" placeholder="..."></textarea>
-        
-        <div class="btn-grid" style="margin-bottom: 10px;">
-            <button class="btn-white full" onclick="importB()"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Restore Backup' : 'Wiederherstellen')</script></button>    </div>
-            
-          <div class="btn-grid" style="margin-bottom: 10px;">        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Reset' : 'Zurücksetzen')</script></label>
-             <button class="btn-red full" onclick="clearAllData()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Clear Calendar' : 'Termine löschen')</script></button>
-        </div>
-        
+        function getDS(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 
-        
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Event reminder' : 'Terminerinnerung')</script></label>
-        
-        <div class="settings-row">
- 
-    <select id="reminderTime" style="width: 100%; height: 32px; margin-bottom: 25px; font-size: 0.85rem; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
-        <option id="opt0" value="0"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'At the event time' : 'Zum Ereigniszeitpunkt')</script></option>
-        <option id="opt15" value="15"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '15 minutes' : '15 Minuten vorher')</script></option>
-        <option id="opt30" value="30"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '30 minutes' : '30 Minuten vorher')</script></option>
-        <option id="opt60" value="60"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '1 hour' : '1 Stunde vorher')</script></option>
-        <option id="opt120" value="120" selected><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '2 hours' : '2 Stunden vorher')</script></option>
-        <option id="opt1440" value="1440"><script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? '1 day' : '1 Tag vorher')</script></option>
-    </select>
-</div>
-        
-        
-        
+        // --- KALENDER BEIM AUFWACHEN FRISCH ZEICHNEN ---
+        if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App) {
+            const AppPlugin = window.Capacitor.Plugins.App;
 
-        
-        <label style="font-size: 0.75rem; font-weight: 600; color: #aaa; display: block; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px;">Design</label>
-        
-        <select id="theme-select" onchange="changeTheme(this.value)" style="width: 100%; height: 32px; margin-bottom: 25px; font-size: 0.85rem; background: #2a2a2a; color: #fff; border: 1px solid #333; border-radius: 10px; padding: 0 12px; -webkit-appearance: none; appearance: none; cursor: pointer;">
-            <option value="infinity">Infinity (Standard)</option>
-            <option value="aqua">Aqua</option>
-            <option value="kiwi">Kiwi</option>
-            <option value="lava">Lava</option>
-            <option value="mono">Mono</option>
-        </select>
-<div class="font-settings" style="display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; margin: 15px 0;">
-    <button onclick="changeFontSize('small')">A-</button>
-    <button onclick="changeFontSize('normal')">Standard</button>
-    <button onclick="changeFontSize('large')">A+</button>
-</div>
+            AppPlugin.addListener('appStateChange', (state) => {
+                if (state.isActive) {
+                    console.log("App aufgewacht! Bereite Neuzeichnen vor...");
 
-<script>
-    // Beim Start der App die gespeicherte Größe automatisch laden
-    document.addEventListener("DOMContentLoaded", () => {
-        const savedSize = localStorage.getItem("user-font-size") || "normal";
-        applyFontSize(savedSize);
-    });
+                    // 1. Listen zwingend leeren, damit renderMonth NICHT abbricht!
+                    loaded = [];
+                    renderedDays = [];
 
-    // Wird aufgerufen, wenn ein Button geklickt wird
-    function changeFontSize(size) {
-        localStorage.setItem("user-font-size", size);
-        applyFontSize(size);
-    }
+                    // 2. Den alten HTML-Inhalt im Scroller löschen
+                    if (scroller) {
+                        scroller.innerHTML = '';
+                    }
 
-    // Setzt die Basis-Größe des HTML-Dokuments
-    function applyFontSize(size) {
-        const html = document.documentElement;
-        
-        if (size === 'small') {
-            html.style.fontSize = "80%";
-        } else if (size === 'large') {
-            html.style.fontSize = "120%"; // Vergrößert deine 0.85rem-Schriften deutlich für Barrierefreiheit
-        } else {
-            html.style.fontSize = "100%";
+                    // 3. Kalender mit frischem Datum komplett neu aufbauen
+                    init();
+                }
+            });
         }
-    }
-</script>
-        <div class="btn-grid">
-            <button class="btn-gray full" onclick="closePop()">  <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'Close' : 'Schließen')</script></button>
-        </div>
-    </div>
-</div>
-<script>
-    const STORAGE_KEY = 'inf_v47';
-    const EX_KEY = 'inf_v47_ex';
 
-    let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    let exceptions = JSON.parse(localStorage.getItem(EX_KEY)) || []; 
-    let curId = null, curSelectedDate = null, loaded = [], renderedDays = [];
-    const scroller = document.getElementById('scroller');
+        // Hier startet deine bestehende Funktion:
 
-    document.getElementById('toggle-trigger').onclick = function(e) {
-        const cb = document.getElementById('m-all');
-        if (e.target !== cb) cb.checked = !cb.checked;
-        toggleT();
-    };
 
-    function getDS(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+        function init() {
+            // --- TIMER STARTEN ---
+            // Sorgt dafür, dass der Kalender um 0:00 Uhr live umspringt, wenn die App offen ist
+            starteMitternachtsTimer();
 
-    function init() {
-        const now = new Date();
-        for(let i = -2; i <= 15; i++) renderMonth(now.getFullYear(), now.getMonth() + i);
-        setTimeout(jumpToday, 100);
-    }
+            const now = new Date();
+            for (let i = -2; i <= 15; i++) renderMonth(now.getFullYear(), now.getMonth() + i);
 
-    function renderMonth(y, m) {
-    const first = new Date(y, m, 1);
-    const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
-    if(loaded.includes(k)) return;
-    loaded.push(k);
+            // --- PRÜFEN, OB WIR WEGEN DES IMPORTS BENACHRICHTIGUNGEN PLANEN MÜSSEN ---
+            if (localStorage.getItem('inf_needs_import_notifications') === 'true') {
+                console.log("Merkzettel gefunden! Plane Benachrichtigungen für importierte Termine...");
 
-    // Minimalistisches CSS für weißen Text mit schwarzem Umriss
-    if (!document.getElementById('w-separator-style')) {
-        const style = document.createElement('style');
-        style.id = 'w-separator-style';
-        style.innerHTML = `
+                // Wir gehen alle Termine durch, die jetzt in der Datenbank 'db' liegen
+                if (Array.isArray(db) && typeof planeNotificationFuerTermin === 'function') {
+                    db.forEach(function (termin) {
+                        // Wir übergeben jeden importierten Termin an deine Notification-Logik
+                        planeNotificationFuerTermin(termin);
+                    });
+                }
+
+                // Wichtig: Merkzettel wieder wegschmeißen, damit das nicht bei jedem Start passiert!
+                localStorage.removeItem('inf_needs_import_notifications');
+            }
+            // -------------------------------------------------------------------------
+
+            setTimeout(jumpToday, 100);
+        }
+
+        function renderMonth(y, m) {
+            const first = new Date(y, m, 1);
+            const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
+            if (loaded.includes(k)) return;
+            loaded.push(k);
+
+            // Minimalistisches CSS für weißen Text mit schwarzem Umriss
+            if (!document.getElementById('w-separator-style')) {
+                const style = document.createElement('style');
+                style.id = 'w-separator-style';
+                style.innerHTML = `
             .week-separator {
                 position: relative;
                 display: flex;
@@ -758,236 +1113,270 @@ textarea,
                 top: 50%;
             }
         `;
-        document.head.appendChild(style);
-    }
+                document.head.appendChild(style);
+            }
 
 
 
 
-    // Hilfsfunktion zur exakten Berechnung der W (ISO-8601)
-    function getWeekNumber(date) {
-        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        const dayNum = d.getUTCDay() || 7;
-        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-        return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    }
+            // Hilfsfunktion zur exakten Berechnung der W (ISO-8601)
+            function getWeekNumber(date) {
+                const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+                const dayNum = d.getUTCDay() || 7;
+                d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+                const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+                return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            }
 
-    const sec = document.createElement('div');
-    sec.className = 'month-section';
-    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('default',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
-    scroller.appendChild(sec);
+            const sec = document.createElement('div');
+            sec.className = 'month-section';
+            sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('default', { month: 'long', year: 'numeric' })}</div></div></div><div class="days-container" id="days-${k}"></div>`;
+            scroller.appendChild(sec);
 
-    const container = document.getElementById(`days-${k}`);
-    let r = new Date(first);
+            const container = document.getElementById(`days-${k}`);
+            let r = new Date(first);
 
-    while(r.getMonth() === first.getMonth()) {
-        if (r.getDay() === 1) {
-            const sep = document.createElement('div');
-            sep.className = 'week-separator';
-            
-            const w = getWeekNumber(r);
-            sep.innerHTML = `<div class="w-label">W ${w}</div>`;
-            
-            container.appendChild(sep);
-        }
-        const ds = getDS(r);
-        const isToday = ds === getDS(new Date());
-        const isWE = (r.getDay() === 0 || r.getDay() === 6);
-        
-        const row = document.createElement('div');
-        row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
-        row.id = `d-${ds}`;
-        row.onclick = () => openAdd(ds);
-        
-        row.innerHTML = `
+            while (r.getMonth() === first.getMonth()) {
+                if (r.getDay() === 1) {
+                    const sep = document.createElement('div');
+                    sep.className = 'week-separator';
+
+                    const w = getWeekNumber(r);
+                    sep.innerHTML = `<div class="w-label">W ${w}</div>`;
+
+                    container.appendChild(sep);
+                }
+                const ds = getDS(r);
+                const isToday = ds === getDS(new Date());
+                const isWE = (r.getDay() === 0 || r.getDay() === 6);
+
+                const row = document.createElement('div');
+                row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
+                row.id = `d-${ds}`;
+                row.onclick = () => openAdd(ds);
+
+                row.innerHTML = `
             <div class="date-col">
                 <span class="date-number">${r.getDate()}.</span>
-                <span class="date-day">${r.toLocaleDateString('default',{weekday:'short'})}</span>
+                <span class="date-day">${r.toLocaleDateString('default', { weekday: 'short' })}</span>
             </div>
             <div class="event-col" id="e-${ds}"></div>
         `;
-        container.appendChild(row);
-        renderedDays.push({ds, date: new Date(r)});
-        drawEvents(ds, r);
-        r.setDate(r.getDate() + 1);
-    }
-}
-
-    function drawEvents(ds, r) {
-        const target = document.getElementById(`e-${ds}`);
-        if(!target) return;
-        target.innerHTML = '';
-        db.forEach(e => {
-            if(exceptions.includes(e.id + '_' + ds)) return;
-            let show = false, rel = "full"; 
-            const sO = new Date(e.startDate), eO = new Date(e.endDate);
-            const dur = Math.round((eO - sO) / (1000 * 60 * 60 * 24));
-            if (e.rep === 'none') {
-                if (ds >= e.startDate && ds <= e.endDate) {
-                    show = true;
-                    if (ds === e.startDate && ds === e.endDate) rel = "full";
-                    else if (ds === e.startDate) rel = "start";
-                    else if (ds === e.endDate) rel = "end";
-                    else rel = "middle";
-                }
-            } else if (ds >= e.startDate) {
-                let a = new Date(sO);
-                while (getDS(a) <= ds) {
-                    let wS = getDS(a), wE_o = new Date(a); wE_o.setDate(wE_o.getDate() + dur);
-                    let wE = getDS(wE_o);
-                    if (ds >= wS && ds <= wE) { 
-                        show = true; 
-                        if (ds === wS && ds === wE) rel = "full";
-                        else if (ds === wS) rel = "start";
-                        else if (ds === wE) rel = "end";
-                        else rel = "middle";
-                        break; 
-                    }
-                    if (e.rep === 'd') a.setDate(a.getDate() + 1);
-                    else if (e.rep === 'w') a.setDate(a.getDate() + 7);
-                    else if (e.rep === 'm') a.setMonth(a.getMonth() + 1);
-                    else if (e.rep === 'y') a.setFullYear(a.getFullYear() + 1);
-                    else break;
-                }
+                container.appendChild(row);
+                renderedDays.push({ ds, date: new Date(r) });
+                drawEvents(ds, r);
+                r.setDate(r.getDate() + 1);
             }
-            if(show) {
-                const div = document.createElement('div');
-                div.className = 'event-item';
-                let t = '';
-                if (!e.all) {
-                    if (rel === "full") t = `${e.startTime} `;
-                    else if (rel === "start") t = `${e.startTime} `;
-                    else if (rel === "end") t = `bis ${e.endTime} `;
-                }
-                div.innerText = t + e.title;
-                div.onclick = (x) => { x.stopPropagation(); openEdit(e, ds); };
-                target.appendChild(div);
-            }
-        });
-    }
-
-    function openAdd(ds) {
-        curId = null; curSelectedDate = ds;
-        document.getElementById('m-title').innerText = "Event";
-        document.getElementById('m-text').value = '';
-        document.getElementById('m-start-date').value = ds;
-        document.getElementById('m-end-date').value = ds;
-        document.getElementById('m-time-start').value = "09:00";
-        document.getElementById('m-time-end').value = "10:00";
-        document.getElementById('m-all').checked = true; toggleT();
-        document.getElementById('m-del').style.display = 'none';
-        document.getElementById('m-event').style.display = 'flex';
-    }
-
-    function openEdit(e, ds) {
-        curId = e.id; curSelectedDate = ds;
-        document.getElementById('m-text').value = e.title;
-        document.getElementById('m-start-date').value = e.startDate;
-        document.getElementById('m-end-date').value = e.endDate;
-        document.getElementById('m-time-start').value = e.startTime || "09:00";
-        document.getElementById('m-time-end').value = e.endTime || "10:00";
-        document.getElementById('m-rep').value = e.rep;
-        document.getElementById('m-all').checked = e.all; toggleT();
-        document.getElementById('m-del').style.display = 'block';
-        document.getElementById('m-event').style.display = 'flex';
-    }
-
-function save() {
-        const title = document.getElementById('m-text').value; if(!title) return;
-        const start = document.getElementById('m-start-date').value;
-        let end = document.getElementById('m-end-date').value; if(end < start) end = start;
-        const obj = { id: curId || Date.now(), title, startDate: start, endDate: end, all: document.getElementById('m-all').checked, startTime: document.getElementById('m-time-start').value, endTime: document.getElementById('m-time-end').value, rep: document.getElementById('m-rep').value };
-        if(curId) db = db.map(i => i.id === curId ? obj : i); else db.push(obj);
-        
-// --- LOCAL NOTIFICATION MIT CAPACITOR (PERFEKT FÜR REINES JS) ---
-        if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
-            const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
-
-            setTimeout(async () => {
-                try {
-                    // 1. Erstmalig nach Erlaubnis fragen (Apple-Popup triggern)
-                    let perm = await LocalNotifications.checkPermissions();
-                    if (perm.display !== 'granted') {
-                        perm = await LocalNotifications.requestPermissions();
-                    }
-
-                    if (perm.display === 'granted') {
-                        const timeStart = obj.all ? "09:00" : obj.startTime;
-                        
-                        // Datum splitten, um den Zeitzonen-Bug zu umgehen
-                        const parts = obj.startDate.split('-'); 
-                        const timeParts = timeStart.split(':'); 
-                        
-                        // Lokale Zeit berechnen
-                        let notificationTime = new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
-                        
-                        // --- DYNAMISCHE MINUTEN ABZIEHEN (CRASH-SICHER) ---
-                        let minutesBefore = 120; // Standard: 2 Stunden vorher
-                        const menuElement = document.getElementById('reminderTime');
-                        if (menuElement) {
-                            minutesBefore = parseInt(menuElement.value) || 0;
-                        }
-                        
-                        // Minuten vom Termin abziehen
-                        notificationTime.setMinutes(notificationTime.getMinutes() - minutesBefore);
-                        // --------------------------------------------------
-
-                        // Sprache abfragen
-                        const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
-                        const notificationTitle = isEnglish ? "Upcoming Event" : "Anstehender Termin";
-
-                        // 2. Notification an iOS übergeben
-                        await LocalNotifications.schedule({
-                            notifications: [
-                                {
-                                    title: notificationTitle,
-                                    body: obj.title,
-                                    id: Math.floor(Math.random() * 100000), // Einzigartige ID für iOS
-                                    schedule: { at: notificationTime },
-                                    sound: 'default' // Schaltet den Standard-iOS-Ton ein
-                                }
-                            ]
-                        });
-                    }
-                } catch (error) {
-                    console.error("Fehler bei den Notifications:", error);
-                }
-            }, 1000);
         }
-        // ---------------------------------------------------------------------------
 
-        // Prozess lautlos abschließen (Wichtig, damit nichts schwarz bleibt!)
-        silentFinalize();
-    }
+        function drawEvents(ds, r) {
+            const target = document.getElementById(`e-${ds}`);
+            if (!target) return;
+            target.innerHTML = '';
+            db.forEach(e => {
+                if (exceptions.includes(e.id + '_' + ds)) return;
+                let show = false, rel = "full";
+                const sO = new Date(e.startDate), eO = new Date(e.endDate);
+                const dur = Math.round((eO - sO) / (1000 * 60 * 60 * 24));
+                if (e.rep === 'none') {
+                    if (ds >= e.startDate && ds <= e.endDate) {
+                        show = true;
+                        if (ds === e.startDate && ds === e.endDate) rel = "full";
+                        else if (ds === e.startDate) rel = "start";
+                        else if (ds === e.endDate) rel = "end";
+                        else rel = "middle";
+                    }
+                } else if (ds >= e.startDate) {
+                    let a = new Date(sO);
+                    while (getDS(a) <= ds) {
+                        let wS = getDS(a), wE_o = new Date(a); wE_o.setDate(wE_o.getDate() + dur);
+                        let wE = getDS(wE_o);
+                        if (ds >= wS && ds <= wE) {
+                            show = true;
+                            if (ds === wS && ds === wE) rel = "full";
+                            else if (ds === wS) rel = "start";
+                            else if (ds === wE) rel = "end";
+                            else rel = "middle";
+                            break;
+                        }
+                        if (e.rep === 'd') a.setDate(a.getDate() + 1);
+                        else if (e.rep === 'w') a.setDate(a.getDate() + 7);
+                        else if (e.rep === 'm') a.setMonth(a.getMonth() + 1);
+                        else if (e.rep === 'y') a.setFullYear(a.getFullYear() + 1);
+                        else break;
+                    }
+                }
+                if (show) {
+                    const div = document.createElement('div');
+                    div.className = 'event-item';
+                    let t = '';
+                    if (!e.all) {
+                        if (rel === "full") t = `${e.startTime} `;
+                        else if (rel === "start") t = `${e.startTime} `;
+                        else if (rel === "end") t = `bis ${e.endTime} `;
+                    }
+                    div.innerText = t + e.title;
+                    div.onclick = (x) => { x.stopPropagation(); openEdit(e, ds); };
+                    target.appendChild(div);
+                }
+            });
+        }
 
-    function silentFinalize() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-        localStorage.setItem(EX_KEY, JSON.stringify(exceptions));
-        renderedDays.forEach(item => drawEvents(item.ds, item.date));
-        closePop();
-    }
+        function openAdd(ds) {
+            curId = null; curSelectedDate = ds;
+            document.getElementById('m-title').innerText = "Event";
+            document.getElementById('m-text').value = '';
+            document.getElementById('m-start-date').value = ds;
+            document.getElementById('m-end-date').value = ds;
+            document.getElementById('m-time-start').value = "09:00";
+            document.getElementById('m-time-end').value = "10:00";
+            document.getElementById('m-all').checked = true; toggleT();
+            document.getElementById('m-del').style.display = 'none';
+            document.getElementById('m-event').style.display = 'flex';
+        }
 
-    function jumpToday() { const t = document.getElementById(`d-${getDS(new Date())}`); if(t) t.scrollIntoView({block:'center', behavior:'smooth'}); }
-    function closePop() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-    
-    function toggleT() { 
-        const isA = document.getElementById('m-all').checked;
-        document.getElementById('m-time-start-wrap').style.display = isA ? 'none' : 'block';
-        document.getElementById('m-time-end-wrap').style.display = isA ? 'none' : 'block';
-    }
+        function openEdit(e, ds) {
+            curId = e.id; curSelectedDate = ds;
+            document.getElementById('m-text').value = e.title;
+            document.getElementById('m-start-date').value = e.startDate;
+            document.getElementById('m-end-date').value = e.endDate;
+            document.getElementById('m-time-start').value = e.startTime || "09:00";
+            document.getElementById('m-time-end').value = e.endTime || "10:00";
+            document.getElementById('m-rep').value = e.rep;
+            document.getElementById('m-all').checked = e.all; toggleT();
+            document.getElementById('m-del').style.display = 'block';
+            document.getElementById('m-event').style.display = 'flex';
+        }
 
-function renderMonth(y, m) {
-    const first = new Date(y, m, 1);
-    const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
-    if(loaded.includes(k)) return;
-    loaded.push(k);
+        function save() {
+            const title = document.getElementById('m-text').value; if (!title) return;
+            const start = document.getElementById('m-start-date').value;
+            let end = document.getElementById('m-end-date').value; if (end < start) end = start;
+            const obj = { id: curId || Date.now(), title, startDate: start, endDate: end, all: document.getElementById('m-all').checked, startTime: document.getElementById('m-time-start').value, endTime: document.getElementById('m-time-end').value, rep: document.getElementById('m-rep').value };
+            if (curId) db = db.map(i => i.id === curId ? obj : i); else db.push(obj);
 
-    // CSS für die W-Schilder und die saubere Ausrichtung der Emojis
-    if (!document.getElementById('w-separator-style')) {
-        const style = document.createElement('style');
-        style.id = 'w-separator-style';
-        style.innerHTML = `
+            // ===========================================================================
+            // --- NEUE GLOBAL CORREKTE FUNKTION FÜR JEDEN TERMIN (NEU & IMPORT) ---
+            // ===========================================================================
+            async function planeNotificationFuerTermin(obj) {
+                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+                    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+                    try {
+                        // 1. Erstmalig nach Erlaubnis fragen (Apple-Popup triggern)
+                        let perm = await LocalNotifications.checkPermissions();
+                        if (perm.display !== 'granted') {
+                            perm = await LocalNotifications.requestPermissions();
+                        }
+
+                        if (perm.display === 'granted') {
+                            const timeStart = obj.all ? "09:00" : obj.startTime;
+
+                            // Datum splitten, um den Zeitzonen-Bug zu umgehen
+                            const parts = obj.startDate.split('-');
+                            const timeParts = timeStart.split(':');
+
+                            // Lokale Zeit berechnen
+                            let notificationTime = new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
+
+                            // --- DYNAMISCHE MINUTEN ABZIEHEN (CRASH-SICHER) ---
+                            let minutesBefore = 120; // Standard: 2 Stunden vorher
+                            const menuElement = document.getElementById('reminderTime');
+                            if (menuElement) {
+                                minutesBefore = parseInt(menuElement.value) || 0;
+                            }
+
+                            // Minuten vom Termin abziehen
+                            notificationTime.setMinutes(notificationTime.getMinutes() - minutesBefore);
+                            // --------------------------------------------------
+
+                            // Sprache abfragen
+                            const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
+                            const notificationTitle = isEnglish ? "Upcoming Event" : "Anstehender Termin";
+
+                            // --- NEU: EINDEUTIGE ID GENERIEREN UND IM TERMIN SPEICHERN ---
+                            // Falls der Termin noch keine Notification-ID hat, erzeugen wir eine
+                            if (!obj.notificationId) {
+                                obj.notificationId = Math.floor(Math.random() * 100000);
+                            }
+                            // -------------------------------------------------------------
+
+                            // 2. Notification an iOS übergeben
+                            await LocalNotifications.schedule({
+                                notifications: [
+                                    {
+                                        title: notificationTitle,
+                                        body: obj.title,
+                                        id: obj.notificationId, // Nutzen die gespeicherte ID
+                                        schedule: { at: notificationTime },
+                                        sound: 'default'
+                                    }
+                                ]
+                            });
+
+                            // Falls du hiernach die DB speicherst, wird die notificationId im LocalStorage gesichert.
+                        }
+                    } catch (error) {
+                        console.error("Fehler bei den Notifications:", error);
+                    }
+                }
+            }
+
+            // --- DIESE FUNKTION LÖSCHT DIE NOTIFICATION BEI IOS ---
+            async function loescheNotificationFuerTermin(obj) {
+                if (!obj || !obj.notificationId) return;
+
+                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+                    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+                    try {
+                        await LocalNotifications.cancel({
+                            notifications: [{ id: obj.notificationId }]
+                        });
+                        console.log("Notification gelöscht für ID:", obj.notificationId);
+                    } catch (error) {
+                        console.error("Fehler beim Löschen der Notification:", error);
+                    }
+                }
+            }
+
+            // ===========================================================================
+
+            // --- DER ALTERSMÄßIGE START-TRIGGER (ABER JETZT VERZÖGERT & ASYNCHRON) ---
+            setTimeout(async () => {
+                // Ruft die obere Funktion für den aktuellen Termin auf, nachdem 1 Sekunde vergangen ist
+                await planeNotificationFuerTermin(obj);
+            }, 1000);
+
+            // Prozess lautlos abschließen (Wichtig, damit nichts schwarz bleibt!)
+            silentFinalize();
+        }
+
+        function silentFinalize() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            localStorage.setItem(EX_KEY, JSON.stringify(exceptions));
+            renderedDays.forEach(item => drawEvents(item.ds, item.date));
+            closePop();
+        }
+
+        function jumpToday() { const t = document.getElementById(`d-${getDS(new Date())}`); if (t) t.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+        function closePop() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+        function toggleT() {
+            const isA = document.getElementById('m-all').checked;
+            document.getElementById('m-time-start-wrap').style.display = isA ? 'none' : 'block';
+            document.getElementById('m-time-end-wrap').style.display = isA ? 'none' : 'block';
+        }
+
+        function renderMonth(y, m) {
+            const first = new Date(y, m, 1);
+            const k = first.getFullYear() + '-' + String(first.getMonth() + 1).padStart(2, '0');
+            if (loaded.includes(k)) return;
+            loaded.push(k);
+
+            // CSS für die W-Schilder und die saubere Ausrichtung der Emojis
+            if (!document.getElementById('w-separator-style')) {
+                const style = document.createElement('style');
+                style.id = 'w-separator-style';
+                style.innerHTML = `
             .week-separator {
                 position: relative;
                 display: flex;
@@ -1028,355 +1417,412 @@ function renderMonth(y, m) {
                 user-select: none;
             }
         `;
-        document.head.appendChild(style);
-    }
+                document.head.appendChild(style);
+            }
 
-    // Hilfsfunktion zur exakten Berechnung der W (ISO-8601)
-    function getWeekNumber(date) {
-        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        const dayNum = d.getUTCDay() || 7;
-        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-        return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    }
+            // Hilfsfunktion zur exakten Berechnung der W (ISO-8601)
+            function getWeekNumber(date) {
+                const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+                const dayNum = d.getUTCDay() || 7;
+                d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+                const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+                return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            }
 
-    // Hilfsfunktion für die exakten Emoji-Mondphasen
-    function getMoonPhaseIcon(date) {
-        const lp = 2551443; 
-        const now = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
-        const newMoon = new Date(1970, 0, 7, 20, 35, 0);
-        let phase = ((now.getTime() - newMoon.getTime()) / 1000) % lp;
-        if (phase < 0) phase += lp;
-        const days = phase / (24 * 3600);
-        
-        // Präzise getaktet auf einen Tag Toleranz
-        if (days >= 29.0 || days < 0.5) return '🌑'; // Neumond
-        if (days >= 6.9 && days < 7.9) return '🌓';   // Zunehmender Halbmond
-        if (days >= 14.3 && days < 15.3) return '🌕'; // Vollmond
-        if (days >= 21.6 && days < 22.6) return '🌗'; // Abnehmender Halbmond
-        return ''; 
-    }
+            // Hilfsfunktion für die exakten Emoji-Mondphasen
+            function getMoonPhaseIcon(date) {
+                const lp = 2551443;
+                const now = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
+                const newMoon = new Date(1970, 0, 7, 20, 35, 0);
+                let phase = ((now.getTime() - newMoon.getTime()) / 1000) % lp;
+                if (phase < 0) phase += lp;
+                const days = phase / (24 * 3600);
 
-    const sec = document.createElement('div');
-    sec.className = 'month-section';
-    sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('default',{month:'long',year:'numeric'})}</div></div></div><div class="days-container" id="days-${k}"></div>`;
-    scroller.appendChild(sec);
+                // Präzise getaktet auf einen Tag Toleranz
+                if (days >= 29.0 || days < 0.5) return '🌑'; // Neumond
+                if (days >= 6.9 && days < 7.9) return '🌓';   // Zunehmender Halbmond
+                if (days >= 14.3 && days < 15.3) return '🌕'; // Vollmond
+                if (days >= 21.6 && days < 22.6) return '🌗'; // Abnehmender Halbmond
+                return '';
+            }
 
-    const container = document.getElementById(`days-${k}`);
-    let r = new Date(first);
+            const sec = document.createElement('div');
+            sec.className = 'month-section';
+            sec.innerHTML = `<div class="month-rail"><div class="sticky-wrapper"><div class="month-label">${first.toLocaleDateString('default', { month: 'long', year: 'numeric' })}</div></div></div><div class="days-container" id="days-${k}"></div>`;
+            scroller.appendChild(sec);
 
-    while(r.getMonth() === first.getMonth()) {
-        if (r.getDay() === 1) {
-            const sep = document.createElement('div');
-            sep.className = 'week-separator';
-            const w = getWeekNumber(r);
-            sep.innerHTML = `<div class="w-label">W ${w}</div>`;
-            container.appendChild(sep);
-        }
-        const ds = getDS(r);
-        const isToday = ds === getDS(new Date());
-        const isWE = (r.getDay() === 0 || r.getDay() === 6);
-        
-        const row = document.createElement('div');
-        row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
-        row.id = `d-${ds}`;
-        row.onclick = () => openAdd(ds);
-        
-        const moonSymbol = getMoonPhaseIcon(r);
-        
-        row.innerHTML = `
+            const container = document.getElementById(`days-${k}`);
+            let r = new Date(first);
+
+            while (r.getMonth() === first.getMonth()) {
+                if (r.getDay() === 1) {
+                    const sep = document.createElement('div');
+                    sep.className = 'week-separator';
+                    const w = getWeekNumber(r);
+                    sep.innerHTML = `<div class="w-label">W ${w}</div>`;
+                    container.appendChild(sep);
+                }
+                const ds = getDS(r);
+                const isToday = ds === getDS(new Date());
+                const isWE = (r.getDay() === 0 || r.getDay() === 6);
+
+                const row = document.createElement('div');
+                row.className = 'day-row' + (isToday ? ' today' : '') + (isWE ? ' we' : '');
+                row.id = `d-${ds}`;
+                row.onclick = () => openAdd(ds);
+
+                const moonSymbol = getMoonPhaseIcon(r);
+
+                row.innerHTML = `
             <div class="date-col">
                 <span class="date-number">${r.getDate()}.</span>
-                <span class="date-day">${r.toLocaleDateString('default',{weekday:'short'})}</span>
+                <span class="date-day">${r.toLocaleDateString('default', { weekday: 'short' })}</span>
             </div>
             <div class="event-col" id="e-${ds}"></div>
             <div class="moon-col">${moonSymbol}</div>
         `;
-        container.appendChild(row);
-        
-        renderedDays.push({ds, date: new Date(r)});
-        drawEvents(ds, r);
-        r.setDate(r.getDate() + 1);
-    }
-}
+                container.appendChild(row);
 
-function openBackup() { 
-        try {
-            // ==========================================
-            // ALTE TERMINE & ALTE AUSNAHMEN LÖSCHEN
-            // ==========================================
-            // Berechne das Datum von vor genau einem Monat
-            const einMonatAgo = new Date();
-            einMonatAgo.setMonth(einMonatAgo.getMonth() - 1);
-
-            // 1. Einmalige alte Termine aus der DB löschen
-            if (Array.isArray(db)) {
-                db = db.filter(item => {
-                    if (item.rep && item.rep !== "none") return true; // Serien behalten
-                    if (!item.startDate) return true; 
-                    
-                    const eventDatum = new Date(item.startDate);
-                    return eventDatum >= einMonatAgo;
-                });
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+                renderedDays.push({ ds, date: new Date(r) });
+                drawEvents(ds, r);
+                r.setDate(r.getDate() + 1);
             }
-
-            // 2. Alte, abgelaufene Ausnahmen (gelöschte Serientermine) löschen
-            if (Array.isArray(exceptions)) {
-                exceptions = exceptions.filter(exString => {
-                    // Splittet den Eintrag beim Unterstrich (z.B. "ID_2026-05-22" -> "2026-05-22")
-                    const teile = exString.split('_');
-                    if (teile.length < 2) return true; // Zur Sicherheit behalten, falls das Format abweicht
-                    
-                    const exDatum = new Date(teile[1]);
-                    // Behalte die Ausnahme nur, wenn das Lösch-Datum nicht älter als ein Monat ist
-                    return exDatum >= einMonatAgo;
-                });
-                // Die bereinigten Ausnahmen im LocalStorage speichern (Nutzt deine EX_KEY Variable)
-                localStorage.setItem(EX_KEY, JSON.stringify(exceptions));
-            }
-            // ==========================================
-
-            // Ab hier läuft dein normales, verschlüsseltes Backup weiter
-            const rawData = JSON.stringify({db, exceptions});
-            const verschluesselt = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-                return String.fromCharCode('0x' + p1);
-            }));
-            
-            document.getElementById('b-export').value = verschluesselt; 
-            document.getElementById('b-import').value = "";
-            document.getElementById('m-backup').style.display = 'flex'; 
-        } catch(e) {
-            alert("Fehler beim Öffnen des Backups.");
         }
-    }
 
-    function copyB() { const el = document.getElementById('b-export'); el.select(); navigator.clipboard.writeText(el.value); alert("Kopiert!"); }
+        function openBackup() {
+            try {
+                // ==========================================
+                // ALTE TERMINE & ALTE AUSNAHMEN LÖSCHEN
+                // ==========================================
+                // Berechne das Datum von vor genau einem Monat
+                const einMonatAgo = new Date();
+                einMonatAgo.setMonth(einMonatAgo.getMonth() - 1);
 
-    function importB() { 
-        const text = document.getElementById('b-import').value.trim();
-        if(!text) return;
-        if(!confirm("Alles überschreiben?")) return;
-        try {
-            // Entschlüsselt den Salat wieder zurück
-            const klarText = decodeURIComponent(atob(text).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            
-            const data = JSON.parse(klarText); 
-            if(data.db) {
+                // 1. Einmalige alte Termine aus der DB löschen
+                if (Array.isArray(db)) {
+                    db = db.filter(item => {
+                        if (item.rep && item.rep !== "none") return true; // Serien behalten
+                        if (!item.startDate) return true;
+
+                        const eventDatum = new Date(item.startDate);
+                        return eventDatum >= einMonatAgo;
+                    });
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+                }
+
+                // 2. Alte, abgelaufene Ausnahmen (gelöschte Serientermine) löschen
+                if (Array.isArray(exceptions)) {
+                    exceptions = exceptions.filter(exString => {
+                        // Splittet den Eintrag beim Unterstrich (z.B. "ID_2026-05-22" -> "2026-05-22")
+                        const teile = exString.split('_');
+                        if (teile.length < 2) return true; // Zur Sicherheit behalten, falls das Format abweicht
+
+                        const exDatum = new Date(teile[1]);
+                        // Behalte die Ausnahme nur, wenn das Lösch-Datum nicht älter als ein Monat ist
+                        return exDatum >= einMonatAgo;
+                    });
+                    // Die bereinigten Ausnahmen im LocalStorage speichern (Nutzt deine EX_KEY Variable)
+                    localStorage.setItem(EX_KEY, JSON.stringify(exceptions));
+                }
+                // ==========================================
+
+                // Ab hier läuft dein normales, verschlüsseltes Backup weiter
+                const rawData = JSON.stringify({ db, exceptions });
+                const verschluesselt = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+                    return String.fromCharCode('0x' + p1);
+                }));
+
+                document.getElementById('b-export').value = verschluesselt;
+                document.getElementById('b-import').value = "";
+                document.getElementById('m-backup').style.display = 'flex';
+            } catch (e) {
+                alert("Fehler beim Öffnen des Backups.");
+            }
+        }
+
+        function copyB() { const el = document.getElementById('b-export'); el.select(); navigator.clipboard.writeText(el.value); alert("Kopiert!"); }
+
+        // --- AUSSERDEM NEU: "async" VOR DIE FUNKTION ---
+        async function importB() {
+            const text = document.getElementById('b-import').value.trim();
+            if (!text) return;
+            if (!confirm("Alles überschreiben?")) return;
+            try {
+                const klarText = decodeURIComponent(atob(text).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                const data = JSON.parse(klarText);
+                if (data.db) {
+                    localStorage.clear();
+
+                    // --- HIER DIE ALTEN WECKER LÖSCHEN (JETZT MIT AWAIT) ---
+                    if (typeof loescheAlleNotifications === 'function') {
+                        await loescheAlleNotifications();
+                    }
+                    // -------------------------------------------------------
+
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data.db));
+                    localStorage.setItem(EX_KEY, JSON.stringify(data.exceptions || []));
+
+                    localStorage.setItem('inf_needs_import_notifications', 'true');
+
+                    location.reload();
+                }
+            } catch (e) {
+                alert("Fehler! Das ist kein gültiges oder ein beschädigtes Backup.");
+            }
+        }
+
+        function downloadB() {
+            try {
+                const rawData = JSON.stringify({ db, exceptions });
+
+                // Text unlesbar machen (dein originaler Code)
+                const verschluesselterText = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+                    return String.fromCharCode('0x' + p1);
+                }));
+
+                // Prüfen, ob wir als App auf dem iPhone laufen
+                if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+
+                    const Filesystem = window.Capacitor.Plugins.Filesystem;
+                    const Share = window.Capacitor.Plugins.Share;
+
+                    if (!Filesystem || !Share) {
+                        alert("Fehler: Die Capacitor-Plugins wurden nicht richtig geladen.");
+                        return;
+                    }
+
+                    // 1. Datei im Zwischenspeicher der App ablegen
+                    Filesystem.writeFile({
+                        path: 'kalender_backup.txt',
+                        data: verschluesselterText,
+                        directory: 'CACHE', // Nutzt den temporären Cache-Ordner auf iOS
+                        encoding: 'utf8'
+                    }).then(function (result) {
+                        // 2. Das native iOS-Teilen-Menü öffnen
+                        return Share.share({
+                            title: 'Kalender Backup',
+                            url: result.uri // Gibt den Pfad der Datei an iOS weiter
+                        });
+                    }).catch(function (err) {
+                        alert("Fehler beim Speichern auf iOS: " + err.message);
+                    });
+
+                } else {
+                    // FALLBACK FÜR LAPTOP: Dein originaler, funktionierender Code
+                    const blob = new Blob([verschluesselterText], { type: 'text/plain' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'kalender_backup.txt';
+
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(a.href);
+                    }, 100);
+                }
+            } catch (e) {
+                alert("Fehler beim Download: " + e.message);
+            }
+        }
+        async function clearAllData() {
+            if (confirm("Alles löschen?")) {
+                // 1. Zuerst alle Benachrichtigungen im iPhone-System löschen
+                await loescheAlleNotifications();
+
+                // 2. Danach den lokalen Speicher leeren
                 localStorage.clear();
-                // Hier nutzen wir deine Original-Variablen
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(data.db));
-                localStorage.setItem(EX_KEY, JSON.stringify(data.exceptions || []));
+
+                // 3. App frisch neu laden
                 location.reload();
             }
-        } catch(e) { 
-            alert("Fehler! Das ist kein gültiges oder ein beschädigtes Backup."); 
         }
-    }
 
-   function downloadB() { 
-    try {
-        const rawData = JSON.stringify({db, exceptions});
-        
-        // Text unlesbar machen (dein originaler Code)
-        const verschluesselterText = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-            return String.fromCharCode('0x' + p1);
-        }));
-        
-        // Prüfen, ob wir als App auf dem iPhone laufen
-        if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-            
-            const Filesystem = window.Capacitor.Plugins.Filesystem;
-            const Share = window.Capacitor.Plugins.Share;
+        function showDeleteOptions() { if (document.getElementById('m-rep').value !== 'none') document.getElementById('m-del-confirm').style.display = 'flex'; else delSerie(); }
+        function hideDeleteOptions() { document.getElementById('m-del-confirm').style.display = 'none'; }
+        // WENN EINE GANZE SERIE GELÖSCHT WIRD (Hier bleibt das Neuladen)
+        async function delSerie() {
+            if (typeof loescheAlleNotifications === 'function') {
+                await loescheAlleNotifications();
+            }
 
-            if (!Filesystem || !Share) {
-                alert("Fehler: Die Capacitor-Plugins wurden nicht richtig geladen.");
+            db = db.filter(i => i.id !== curId);
+            silentFinalize();
+
+            localStorage.setItem('inf_needs_import_notifications', 'true');
+            location.reload(); // Ganze Serie -> Lädt neu
+        }
+
+        // WENN EIN EINZELTERMIN ODER EIN SERIENELEMENT GELÖSCHT WIRD (Kein Neuladen!)
+        function delSingle() {
+            // 1. Den passenden Termin suchen
+            const aktuellerTermin = db.find(i => i.id === curId);
+
+            // 2. Gegezielt NUR DIESEN EINEN Wecker auf dem iPhone löschen
+            if (aktuellerTermin && typeof loescheNotificationFuerTermin === 'function') {
+                loescheNotificationFuerTermin(aktuellerTermin);
+            }
+
+            // 3. Unterscheiden: Ist es ein Serienelement oder ein normaler Termin?
+            const istSerie = db.some(i => i.id === curId && i.isSerie); // Prüft, ob es eine Serie ist
+
+            if (istSerie) {
+                // Es ist ein Serienelement -> Als Ausnahme eintragen
+                exceptions.push(curId + '_' + curSelectedDate);
+            } else {
+                // Es ist ein ganz normaler Einzeltermin -> Komplett aus der Datenbank löschen
+                db = db.filter(i => i.id !== curId);
+            }
+
+            // 4. Im Hintergrund speichern, ohne die App neu zu starten!
+            silentFinalize();
+        }
+
+        scroller.onscroll = () => { if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length - 1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); } };
+        init();
+
+
+        function changeTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('inf_theme', theme);
+        }
+
+        // Beim Start das gespeicherte Thema laden
+        (function () {
+            const savedTheme = localStorage.getItem('inf_theme') || 'infinity';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const select = document.getElementById('theme-select');
+            if (select) select.value = savedTheme;
+        })();
+
+        // Verhindert das Zoomen durch Doppeltippen und Finger-Spreizen auf dem iPhone
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+
+        // --- AUTOMATISCHER BACKUP-REMINDER ALLE 2 WOCHEN (DEUTSCH & ENGLISCH) ---
+        if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+            const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+
+            setTimeout(async () => {
+                try {
+                    // 1. Berechtigungen prüfen und ggf. anfragen
+                    let perm = await LocalNotifications.checkPermissions();
+                    if (perm.display !== 'granted') {
+                        perm = await LocalNotifications.requestPermissions();
+                    }
+
+                    // 2. Wenn der Nutzer zustimmt, den Reminder einrichten
+                    if (perm.display === 'granted') {
+
+                        // Startzeit berechnen: Heute in genau 14 Tagen um 18:00 Uhr abends
+                        let firstBackupTime = new Date();
+                        firstBackupTime.setDate(firstBackupTime.getDate() + 14);
+                        firstBackupTime.setHours(18, 0, 0, 0);
+
+                        // Sprache abfragen
+                        const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
+
+                        // Texte dynamisch setzen
+                        const reminderTitle = isEnglish ? "Backup Reminder" : "Backup-Erinnerung";
+                        const reminderBody = isEnglish
+                            ? "Secure your calendar data now via the Tools menu."
+                            : "Sichere deine Kalenderdaten jetzt über das Tools-Menü.";
+
+                        // Notification bei iOS registrieren
+                        await LocalNotifications.schedule({
+                            notifications: [
+                                {
+                                    title: reminderTitle,
+                                    body: reminderBody,
+                                    id: 99999,          // Feste ID verhindert doppelte Erinnerungen
+                                    sound: 'default',    // Macht alle 2 Wochen akustisch auf sich aufmerksam
+                                    schedule: {
+                                        at: firstBackupTime,
+                                        every: 'two-weeks' // Wiederholt sich automatisch alle 14 Tage
+                                    }
+                                }
+                            ]
+                        });
+
+                        console.log(`Backup-Reminder auf ${isEnglish ? 'Englisch' : 'Deutsch'} eingerichtet.`);
+                    }
+                } catch (error) {
+                    console.error("Fehler beim Einrichten des Backup-Reminders:", error);
+                }
+            }, 1000);
+        }
+
+
+
+        // ==========================================
+        // SUCHFUNKTION FÜR DEINE EVENT-DATENBANK
+        // ==========================================
+
+        // 1. Öffnet das Suchfenster
+        function openSearch() {
+            document.getElementById('s-input').value = "";
+            document.getElementById('s-results').innerHTML = "<p style='color:gray; font-size:14px;'> </p>";
+            document.getElementById('m-search').style.display = 'flex';
+            document.getElementById('s-input').focus();
+        }
+
+        // 2. Durchsucht die Termine live beim Tippen
+        function runSearch() {
+            const query = document.getElementById('s-input').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('s-results');
+
+            // Wenn das Feld leer ist, nichts anzeigen
+            if (!query) {
+                resultsContainer.innerHTML = "";
                 return;
             }
 
-            // 1. Datei im Zwischenspeicher der App ablegen
-            Filesystem.writeFile({
-                path: 'kalender_backup.txt',
-                data: verschluesselterText,
-                directory: 'CACHE', // Nutzt den temporären Cache-Ordner auf iOS
-                encoding: 'utf8'
-            }).then(function(result) {
-                // 2. Das native iOS-Teilen-Menü öffnen
-                return Share.share({
-                    title: 'Kalender Backup',
-                    url: result.uri // Gibt den Pfad der Datei an iOS weiter
-                });
-            }).catch(function(err) {
-                alert("Fehler beim Speichern auf iOS: " + err.message);
+            if (!Array.isArray(db)) return;
+
+            // Filtert alle Termine, bei denen der Titel das Suchwort enthält
+            const gefundeneEvents = db.filter(item => {
+                return item.title && item.title.toLowerCase().includes(query);
             });
 
-        } else {
-            // FALLBACK FÜR LAPTOP: Dein originaler, funktionierender Code
-            const blob = new Blob([verschluesselterText], {type: 'text/plain'}); 
-            const a = document.createElement('a'); 
-            a.href = URL.createObjectURL(blob); 
-            a.download = 'kalender_backup.txt'; 
-            
-            document.body.appendChild(a);
-            a.click(); 
-            setTimeout(() => {
-                document.body.removeChild(a);
-                URL.revokeObjectURL(a.href);
-            }, 100);
-        }
-    } catch(e) {
-        alert("Fehler beim Download: " + e.message);
-    }
-}
-    function clearAllData() { if(confirm("Alles löschen?")) { localStorage.clear(); location.reload(); } }
-    function showDeleteOptions() { if(document.getElementById('m-rep').value !== 'none') document.getElementById('m-del-confirm').style.display = 'flex'; else delSerie(); }
-    function hideDeleteOptions() { document.getElementById('m-del-confirm').style.display = 'none'; }
-    function delSerie() { db = db.filter(i => i.id !== curId); silentFinalize(); }
-    function delSingle() { exceptions.push(curId + '_' + curSelectedDate); silentFinalize(); }
-
-    scroller.onscroll = () => { if(scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length-1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); }};
-    init();
-
-
-function changeTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('inf_theme', theme);
-}
-
-// Beim Start das gespeicherte Thema laden
-(function() {
-    const savedTheme = localStorage.getItem('inf_theme') || 'infinity';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    const select = document.getElementById('theme-select');
-    if(select) select.value = savedTheme;
-})();
-
-// Verhindert das Zoomen durch Doppeltippen und Finger-Spreizen auf dem iPhone
-document.addEventListener('gesturestart', function (e) {
-    e.preventDefault();
-});
-
-
-// --- AUTOMATISCHER BACKUP-REMINDER ALLE 2 WOCHEN (DEUTSCH & ENGLISCH) ---
-if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
-    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
-
-    setTimeout(async () => {
-        try {
-            // 1. Berechtigungen prüfen und ggf. anfragen
-            let perm = await LocalNotifications.checkPermissions();
-            if (perm.display !== 'granted') {
-                perm = await LocalNotifications.requestPermissions();
+            // Wenn nichts gefunden wurde
+            if (gefundeneEvents.length === 0) {
+                resultsContainer.innerHTML = "<p style='color:red; font-size:14px;'></p>";
+                return;
             }
 
-            // 2. Wenn der Nutzer zustimmt, den Reminder einrichten
-            if (perm.display === 'granted') {
-                
-                // Startzeit berechnen: Heute in genau 14 Tagen um 18:00 Uhr abends
-                let firstBackupTime = new Date();
-                firstBackupTime.setDate(firstBackupTime.getDate() + 14);
-                firstBackupTime.setHours(18, 0, 0, 0); 
+            // Ergebnisse für den Bildschirm aufbereiten
+            let html = "";
+            gefundeneEvents.forEach(item => {
+                // Formatiere das Datum ein bisschen schöner (aus 2026-05-16 wird 16.05.2026)
+                let formatiertesDatum = item.startDate;
+                if (item.startDate) {
+                    const teile = item.startDate.split('-');
+                    if (teile.length === 3) formatiertesDatum = `${teile[2]}.${teile[1]}.${teile[0]}`;
+                }
 
-                // Sprache abfragen
-                const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
-                
-                // Texte dynamisch setzen
-                const reminderTitle = isEnglish ? "Backup Reminder" : "Backup-Erinnerung";
-                const reminderBody = isEnglish 
-                    ? "Secure your calendar data now via the Tools menu." 
-                    : "Sichere deine Kalenderdaten jetzt über das Tools-Menü.";
+                // Kennzeichnung für wiederkehrende Termine
+                let wiederholung = "";
+                if (item.rep && item.rep !== "none") {
+                    wiederholung = ` <span style='font-size:11px; color:green;'>(${item.rep})</span>`;
+                }
 
-                // Notification bei iOS registrieren
-                await LocalNotifications.schedule({
-                    notifications: [
-                        {
-                            title: reminderTitle,
-                            body: reminderBody,
-                            id: 99999,          // Feste ID verhindert doppelte Erinnerungen
-                            sound: 'default',    // Macht alle 2 Wochen akustisch auf sich aufmerksam
-                            schedule: { 
-                                at: firstBackupTime,
-                                every: 'two-weeks' // Wiederholt sich automatisch alle 14 Tage
-                            }
-                        }
-                    ]
-                });
-                
-                console.log(`Backup-Reminder auf ${isEnglish ? 'Englisch' : 'Deutsch'} eingerichtet.`);
-            }
-        } catch (error) {
-            console.error("Fehler beim Einrichten des Backup-Reminders:", error);
-        }
-    }, 1000);
-}
-
-
-
-// ==========================================
-// SUCHFUNKTION FÜR DEINE EVENT-DATENBANK
-// ==========================================
-
-// 1. Öffnet das Suchfenster
-function openSearch() {
-    document.getElementById('s-input').value = "";
-    document.getElementById('s-results').innerHTML = "<p style='color:gray; font-size:14px;'> </p>";
-    document.getElementById('m-search').style.display = 'flex';
-    document.getElementById('s-input').focus();
-}
-
-// 2. Durchsucht die Termine live beim Tippen
-function runSearch() {
-    const query = document.getElementById('s-input').value.toLowerCase().trim();
-    const resultsContainer = document.getElementById('s-results');
-    
-    // Wenn das Feld leer ist, nichts anzeigen
-    if (!query) {
-        resultsContainer.innerHTML = "";
-        return;
-    }
-    
-    if (!Array.isArray(db)) return;
-    
-    // Filtert alle Termine, bei denen der Titel das Suchwort enthält
-    const gefundeneEvents = db.filter(item => {
-        return item.title && item.title.toLowerCase().includes(query);
-    });
-    
-    // Wenn nichts gefunden wurde
-    if (gefundeneEvents.length === 0) {
-        resultsContainer.innerHTML = "<p style='color:red; font-size:14px;'></p>";
-        return;
-    }
-    
-    // Ergebnisse für den Bildschirm aufbereiten
-    let html = "";
-    gefundeneEvents.forEach(item => {
-        // Formatiere das Datum ein bisschen schöner (aus 2026-05-16 wird 16.05.2026)
-        let formatiertesDatum = item.startDate;
-        if (item.startDate) {
-            const teile = item.startDate.split('-');
-            if (teile.length === 3) formatiertesDatum = `${teile[2]}.${teile[1]}.${teile[0]}`;
-        }
-        
-        // Kennzeichnung für wiederkehrende Termine
-        let wiederholung = "";
-        if (item.rep && item.rep !== "none") {
-            wiederholung = ` <span style='font-size:11px; color:green;'>(${item.rep})</span>`;
-        }
-        
-        html += `
+                html += `
             <div style="padding:8px; border-bottom:1px solid #f0f0f0; font-size:14px;">
                 <strong>${formatiertesDatum}</strong>: ${item.title}${wiederholung}
                 ${item.startTime ? `<br><span style='color:gray; font-size:12px;'>${item.startTime}</span>` : ''}
             </div>
         `;
-    });
-    
-    resultsContainer.innerHTML = html;
-}
+            });
 
-</script>
+            resultsContainer.innerHTML = html;
+        }
+
+    </script>
 </body>
+
 </html>
