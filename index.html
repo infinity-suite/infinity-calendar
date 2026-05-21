@@ -632,7 +632,7 @@
             }
 
             var isEn = (navigator.language || navigator.userLanguage).startsWith('en');
-            document.getElementById('preloader-text').innerText = isEn ? 'Calculating moon phases...' : 'Berechne Mondphasen...';
+            document.getElementById('preloader-text').innerText = isEn ? 'Calculating moon phases' : 'Berechne Mondphasen';
 
             window.addEventListener('load', function () {
                 setTimeout(function () {
@@ -1641,7 +1641,13 @@
             }
         }
 
-        function showDeleteOptions() { if (document.getElementById('m-rep').value !== 'none') document.getElementById('m-del-confirm').style.display = 'flex'; else delSerie(); }
+function showDeleteOptions() { 
+    if (document.getElementById('m-rep').value !== 'none') {
+        document.getElementById('m-del-confirm').style.display = 'flex'; 
+    } else {
+        delSingle(); // Das hier verhindert das Springen bei Einzelterminen!
+    }
+}
         function hideDeleteOptions() { document.getElementById('m-del-confirm').style.display = 'none'; }
         // WENN EINE GANZE SERIE GELÖSCHT WIRD (Hier bleibt das Neuladen)
         async function delSerie() {
@@ -1657,6 +1663,7 @@
         }
 
         // WENN EIN EINZELTERMIN ODER EIN SERIENELEMENT GELÖSCHT WIRD (Kein Neuladen!)
+
         function delSingle() {
             // 1. Den passenden Termin suchen
             const aktuellerTermin = db.find(i => i.id === curId);
@@ -1666,21 +1673,21 @@
                 loescheNotificationFuerTermin(aktuellerTermin);
             }
 
-            // 3. Unterscheiden: Ist es ein Serienelement oder ein normaler Termin?
-            const istSerie = db.some(i => i.id === curId && i.isSerie); // Prüft, ob es eine Serie ist
+            // === DER FIX HIER ===
+            // Wir prüfen anhand von .rep (nicht .isSerie), ob es sich um eine Serie handelt!
+            const istSerie = aktuellerTermin && aktuellerTermin.rep && aktuellerTermin.rep !== 'none';
 
             if (istSerie) {
-                // Es ist ein Serienelement -> Als Ausnahme eintragen
+                // Es ist ein Serienelement -> Als Ausnahme eintragen (nur diesen Tag löschen)
                 exceptions.push(curId + '_' + curSelectedDate);
             } else {
                 // Es ist ein ganz normaler Einzeltermin -> Komplett aus der Datenbank löschen
                 db = db.filter(i => i.id !== curId);
             }
 
-            // 4. Im Hintergrund speichern, ohne die App neu zu starten!
+            // 4. Im Hintergrund speichern und schießen
             silentFinalize();
         }
-
         scroller.onscroll = () => { if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length - 1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); } };
         init();
 
