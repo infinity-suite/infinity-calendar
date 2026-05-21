@@ -139,30 +139,35 @@
             position: relative;
         }
 
-        .sticky-wrapper {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            /* Wir nutzen 100vh, damit der Wrapper den gesamten Sichtbereich abdeckt */
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            /* Zentriert den Text vertikal im sichtbaren Bereich */
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
+.sticky-wrapper {
+    position: -webkit-sticky;
+    position: sticky;
+    
+    /* === DER FINALE PERFEKTE PIXEL === */
+    top: 39px; 
+    height: calc(100dvh - 39px); 
+    
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    box-sizing: border-box;
+}
 
-        .month-label {
-            color: var(--text-sidebar) !important;
-            writing-mode: vertical-lr;
-            transform: rotate(180deg);
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
+.month-label {
+    color: var(--text-sidebar) !important;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    
+    /* === DER RADIKALE SCHUBS === */
+    /* Wir schieben ihn jetzt um satte 40 Pixel nach unten. */
+    margin-top: 40px; 
+    
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
 
         .days-container {
             flex: 1;
