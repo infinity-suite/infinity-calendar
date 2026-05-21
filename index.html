@@ -28,6 +28,7 @@
         }
     </style>
     <style>
+    
         :root,
         [data-theme="infinity"] {
             --bg-black: #ffffff;
@@ -55,7 +56,17 @@
             --bg-button: rgba(37, 173, 231, 0.7);
         }
 
-
+[data-theme="cherry"] {
+    --bg-black: #ffffff;
+    --sidebar-gray: #faf0f4;          /* Softes, minimal rosa-stichiges Apple-Grau */
+    --row-light: #fff0f5;             /* Zartes, helles Rosé (LavenderBlush) */
+    --row-dark: #ffe3ec;              /* Wunderschönes, softes Baby-Pink */
+    --today-yellow: #ff6699;          /* Knackiges, girly Erdbeer-Pink für "Heute" */
+    --text-event: #000000 !important;
+    --text-main: #000000 !important;
+    --text-sidebar: #5c4d54 !important; /* Dunkles Beeren-Grau für sanfteren Text-Kontrast */
+    --bg-button: rgba(255, 102, 153, 0.2); /* Transparentes Pink für die Buttons */
+}
 
 
 
@@ -152,6 +163,8 @@
     justify-content: center;
     box-sizing: border-box;
 }
+
+
 
 .month-label {
     color: var(--text-sidebar) !important;
@@ -448,6 +461,18 @@
                 --bg-button: rgba(20, 50, 20, 0.9);
             }
 
+[data-theme="cherry"] {
+        --bg-black: #050003;          /* Fast Schwarz, mit einem winzigen Hauch Beere */
+        --sidebar-gray: #1a0f15;      /* Dunkles, edles Kastanien-Lila */
+        --row-light: #2b1320;         /* Tiefes, mystisches Pflaumen-Lila */
+        --row-dark: #200b16;          /* Noch eine Nuance dunkler für den Wechsel */
+        --today-yellow: #ff4da6;      /* Leuchtendes Neon-Pink, das im Dark Mode perfekt knallt */
+        --text-main: #ffffff !important;
+        --text-event: #ffffff !important;
+        --text-sidebar: #a68a99 !important; /* Softes Pastell-Lila-Grau für die Sidebar */
+        --bg-button: rgba(255, 77, 166, 0.25); /* Perfekt abgestimmter, pinker Button-Hintergrund */
+    }
+
             [data-theme="mono"] {
                 --bg-black: #000000;
                 --sidebar-gray: #121212 !important;
@@ -654,12 +679,12 @@
     <div class="calendar-scroll" id="scroller"></div>
 
     <button onclick="jumpToday()"
-        style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+        style="position: fixed; bottom: 30px; left: 25%; transform: translateX(-50%); z-index: 15; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
         <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'TODAY' : 'JETZT')</script>
     </button>
 
     <button onclick="openSearch()"
-        style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+        style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 15; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
         <script>document.write((navigator.language || navigator.userLanguage).startsWith('en') ? 'FIND' : 'SUCHE')</script>
     </button>
 
@@ -695,7 +720,7 @@
     </div>
 
     <button onclick="openBackup()"
-        style="position: fixed; bottom: 30px; left: 75%; transform: translateX(-50%); z-index: 10; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
+        style="position: fixed; bottom: 30px; left: 75%; transform: translateX(-50%); z-index: 15; cursor: pointer; background-color: rgba(100, 100, 100, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 0px solid #333333; padding: 10px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 80px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); font-family: sans-serif; letter-spacing: 0.5px; white-space: nowrap;">
         TOOLS
     </button>
     <div id="m-event" class="modal">
@@ -900,6 +925,7 @@
                 <option value="aqua">Aqua</option>
                 <option value="kiwi">Kiwi</option>
                 <option value="lava">Lava</option>
+                          <option value="cherry">Cherry</option>
                 <option value="mono">Mono</option>
             </select>
             <div class="font-settings"
@@ -1835,6 +1861,65 @@ function showDeleteOptions() {
         }
 
     </script>
+<style>
+    /* Das fixierte Overlay, das sich über das overflow:hidden hinwegsetzt */
+    .bottom-blur-overlay-final {
+        position: fixed !important;
+        bottom: -20px !important; /* Zieht den fehlerhaften Safari-Pixel aus dem Screen */
+        left: 0 !important;
+        right: 0 !important;
+        height: 100px !important; /* Erhöht um den Puffer */
+        padding-bottom: 20px !important;
+        pointer-events: none !important; /* Klicks gehen durch zu den Buttons */
+        
+        /* WUNSCH-Z-INDEX */
+        z-index: 11 !important; 
+        
+        /* Der echte Apple-Blur */
+        -webkit-backdrop-filter: blur(15px) !important;
+        backdrop-filter: blur(15px) !important;
+        
+        /* Maske für den fließenden Übergang */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 80%) !important;
+        mask-image: linear-gradient(to bottom, transparent 0%, black 80%) !important;
+    }
+
+    /* Das eigentliche Farbelement im Inneren */
+    .bottom-blur-overlay-final::after {
+        content: '' !important;
+        display: block !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+    }
+
+    /* SOFTERES WEISS im Light Mode (Deckkraft am Ende auf 0.65 reduziert) */
+    @media (prefers-color-scheme: light) {
+        .bottom-blur-overlay-final::after {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.65) 100%) !important;
+        }
+    }
+
+    /* SOFTERES SCHWARZ im Dark Mode (Deckkraft am Ende auf 0.65 reduziert) */
+    @media (prefers-color-scheme: dark) {
+        .bottom-blur-overlay-final::after {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%) !important;
+        }
+    }
+</style>
+
+<div class="bottom-blur-overlay-final"></div>
+
+<div class="bottom-blur-overlay-final"></div>
+
+<div class="bottom-blur-overlay-final"></div>
+
+<div class="bottom-blur-overlay-final"></div>
+<div class="bottom-blur-overlay-final"></div>
+
+<div class="bottom-blur-overlay-final"></div>
 </body>
 
 </html>
