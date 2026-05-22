@@ -637,9 +637,124 @@
         </p>
 
         <script>
+function copyB() {
+    const el = document.getElementById('b-export');
+    if (!el) { console.error("Element nicht gefunden"); return; }
+    
+    // Einfachste Methode, die immer funktioniert
+    el.focus();
+    el.select();
+    try {
+        document.execCommand('copy');
 
-            // --- ALLE BENACHRICHTIGUNGEN DER APP AUF EINMAL LÖSCHEN ---
-            async function loescheAlleNotifications() {
+    } catch (e) {
+        alert("Error");
+    }
+}
+
+     // ===========================================================================
+            // --- NEUE GLOBAL CORREKTE FUNKTION FÜR JEDEN TERMIN (NEU & IMPORT) ---
+            // ===========================================================================
+            window.planeNotificationFuerTermin = async function(obj) {
+                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+                    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+                    try {
+                        // 1. Erstmalig nach Erlaubnis fragen (Apple-Popup triggern)
+                        let perm = await LocalNotifications.checkPermissions();
+                        if (perm.display !== 'granted') {
+                            perm = await LocalNotifications.requestPermissions();
+                        }
+
+                        if (perm.display === 'granted') {
+                            const timeStart = obj.all ? "09:00" : obj.startTime;
+
+                            // Datum splitten, um den Zeitzonen-Bug zu umgehen
+                            const parts = obj.startDate.split('-');
+                            const timeParts = timeStart.split(':');
+
+                            // Lokale Zeit berechnen
+                            let notificationTime = new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
+
+                            // --- DYNAMISCHE MINUTEN ABZIEHEN (CRASH-SICHER) ---
+                            let minutesBefore = 120; // Standard: 2 Stunden vorher
+                            const menuElement = document.getElementById('reminderTime');
+                            if (menuElement) {
+                                minutesBefore = parseInt(menuElement.value) || 0;
+                            }
+
+                            // Minuten vom Termin abziehen
+                            notificationTime.setMinutes(notificationTime.getMinutes() - minutesBefore);
+                            // --------------------------------------------------
+
+                            // Sprache abfragen
+                            const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
+                            const notificationTitle = isEnglish ? "Upcoming Event" : "Anstehender Termin";
+
+                            // --- NEU: EINDEUTIGE ID GENERIEREN UND IM TERMIN SPEICHERN ---
+                            // Falls der Termin noch keine Notification-ID hat, erzeugen wir eine
+                            if (!obj.notificationId) {
+                                obj.notificationId = Math.floor(Math.random() * 100000);
+                            }
+                            // -------------------------------------------------------------
+
+                       // 2. Notification an iOS übergeben
+                            await LocalNotifications.schedule({
+                                notifications: [
+                                    {
+                                        title: notificationTitle,
+                                        body: obj.title,
+                                        id: obj.notificationId, // Nutzen die gespeicherte ID
+                                        schedule: { at: notificationTime },
+                                        sound: 'default',
+                                        // --- NEU: HIER DIE ORIGINALE TERMIN-ID MITGEBEN ---
+                                        extra: {
+                                            terminId: obj.id
+                                        }
+                                    }
+                                ]
+                            });
+
+                            // Falls du hiernach die DB speicherst, wird die notificationId im LocalStorage gesichert.
+                        }
+                    } catch (error) {
+                        console.error("Fehler bei den Notifications:", error);
+                    }
+                }
+            }
+
+
+async function starteImportPlanung() {
+    console.log("[IMPORT] Planung gestartet...");
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+    // Wir warten kurz, bis wir sicher sind, dass die Funktionen geladen sind
+    let attempts = 0;
+    while (!window.planeNotificationFuerTermin && attempts < 10) {
+        console.log("[IMPORT] Warte auf Initialisierung...");
+        await new Promise(r => setTimeout(r, 200));
+        attempts++;
+    }
+
+    if (typeof window.planeNotificationFuerTermin !== 'function') {
+        console.error("[IMPORT] Kritischer Fehler: Funktion konnte nicht gefunden werden!");
+        return;
+    }
+
+    for (const termin of data) {
+        try {
+            const terminZeit = new Date(`${termin.startDate}T${termin.startTime}:00`).getTime();
+            if (terminZeit > new Date().getTime()) {
+                await window.planeNotificationFuerTermin(termin);
+                await new Promise(r => setTimeout(r, 50));
+            }
+        } catch (err) {
+            console.error("[IMPORT] Fehler bei ID " + termin.id, err);
+        }
+    }
+location.reload();
+}
+// --- ALLE BENACHRICHTIGUNGEN DER APP AUF EINMAL LÖSCHEN ---
+async function loescheAlleNotifications() {
                 if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
                     const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
                     try {
@@ -956,14 +1071,81 @@
                     }, 100);
                 }, false);
 
-                // --- UND HIER GEHT ES DANN MIT DEINER INIT-FUNKTION WEITER ---
-                function init() {
-                    const now = new Date();
-                    for (let i = -2; i <= 15; i++) renderMonth(now.getFullYear(), now.getMonth() + i);
+function init() {
+    const now = new Date();
+    for (let i = -2; i <= 15; i++) renderMonth(now.getFullYear(), now.getMonth() + i);
 
-                    // ... hier drunter steht noch unser Notification-Check fürs Backup ...
-                    setTimeout(jumpToday, 100);
+    // --- PRÜFEN, OB WIR WEGEN DES IMPORTS BENACHRICHTIGUNGEN PLANEN MÜSSEN ---
+    if (localStorage.getItem('inf_needs_import_notifications') === 'true') {
+        console.log("Merkzettel gefunden! Plane Benachrichtigungen für importierte Termine...");
+
+        setTimeout(async () => {
+            // SIKHERHEITS-CHECK: Wir holen uns die importierten Daten FRISCH und direkt aus dem Speicher
+            let importDb = [];
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY); // Falls dein Key anders heißt, nutze hier 'dein_key'
+                if (stored) importDb = JSON.parse(stored);
+            } catch (e) {
+                console.error("Fehler beim Laden der Backup-Daten:", e);
+            }
+
+            // --- DIAGNOSE-LOGS: HIER SCHALTEN WIR DAS LICHT AN ---
+            console.log("[DIAGNOSE] importDb ist ein Array?", Array.isArray(importDb), "Anzahl:", importDb ? importDb.length : 0);
+            console.log("[DIAGNOSE] Typ von planeNotificationFuerTermin:", typeof planeNotificationFuerTermin);
+            // -----------------------------------------------------
+
+            if (Array.isArray(importDb) && typeof planeNotificationFuerTermin === 'function') {
+                console.log("Scharfschalten von " + importDb.length + " importierten Terminen gestartet...");
+
+                for (const termin of importDb) {
+                    try {
+                        // --- DATUMSOBJEKTE FÜR IOS WIEDERBELEBEN ---
+                        if (termin.date && typeof termin.date === 'string') termin.date = new Date(termin.date);
+                        if (termin.time && typeof termin.time === 'string') termin.time = new Date(termin.time);
+                        if (termin.notificationTime && typeof termin.notificationTime === 'string') termin.notificationTime = new Date(termin.notificationTime);
+
+                        // Wecker an iOS übergeben
+                        await planeNotificationFuerTermin(termin);
+                        console.log("[IMPORT] Wecker registriert für ID:", termin.id);
+                    } catch (err) {
+                        console.error("Fehler beim Import-Planen für:", termin, err);
+                    }
                 }
+            }
+            
+            // WICHTIG: Den Merkzettel erst löschen, wenn die Schleife WIRKLICH durch ist!
+            localStorage.removeItem('inf_needs_import_notifications');
+            console.log("Import-Planung erfolgreich abgeschlossen. Merkzettel gelöscht.");
+        }, 3000); // Lassen wir ruhig bei 3000ms für den Test
+    }
+// --- NEU: LAUTLOSES ABFANGEN FÜR GELÖSCHTE SERIENTERMINE ---
+            if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+                const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+                
+                // Dieser Event-Listener feuert, sobald ein Wecker auf dem Handy aktiv wird
+                LocalNotifications.addListener('localNotificationReceived', async (notification) => {
+                    // Heutiges Datum im Format YYYY-MM-DD bauen
+                    const heute = new Date();
+                    const jahr = heute.getFullYear();
+                    const monat = String(heute.getMonth() + 1).padStart(2, '0');
+                    const tag = String(heute.getDate()).padStart(2, '0');
+                    const heuteString = `${jahr}-${monat}-${tag}`;
+
+                    // ID aus den vorhin hinzugefügten Extra-Daten holen
+                    const terminId = notification.extra && notification.extra.terminId;
+                    const ausnahmeSchluessel = terminId + '_' + heuteString;
+
+                    // Wenn dieser Tag in den gelöschten Ausnahmen steht, löschen wir die Notification sofort vom Bildschirm
+                    if (Array.isArray(exceptions) && exceptions.includes(ausnahmeSchluessel)) {
+                        console.log("Ausnahme getroffen! Schalte Wecker stumm für: " + ausnahmeSchluessel);
+                        await LocalNotifications.removeDeliveredNotifications({
+                            notifications: [{ id: notification.id }]
+                        });
+                    }
+                });
+            }
+            setTimeout(jumpToday, 100);
+        }
 
                 // Variable zum Merken des aktuellen Weckers (ganz wichtig gegen Verdopplung!)
                 let mitternachtsTimerId = null;
@@ -1279,95 +1461,56 @@
             document.getElementById('m-event').style.display = 'flex';
         }
 
-        function save() {
+// GANZ FREI IM CODE PLATZIEREN (NICHT IN SAVE VERSCHACHTELT!)
+async function loescheNotificationFuerTermin(obj) {
+    if (!obj || !obj.notificationId) return;
+
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
+        const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
+        try {
+            await LocalNotifications.cancel({
+                notifications: [{ id: parseInt(obj.notificationId, 10) }]
+            });
+            console.log("Notification gelöscht für ID:", obj.notificationId);
+        } catch (error) {
+            console.error("Fehler beim Löschen der Notification:", error);
+        }
+    }
+}
+        
+function save() {
             const title = document.getElementById('m-text').value; if (!title) return;
             const start = document.getElementById('m-start-date').value;
             let end = document.getElementById('m-end-date').value; if (end < start) end = start;
-            const obj = { id: curId || Date.now(), title, startDate: start, endDate: end, all: document.getElementById('m-all').checked, startTime: document.getElementById('m-time-start').value, endTime: document.getElementById('m-time-end').value, rep: document.getElementById('m-rep').value };
+            
+            // 1. Bestehenden Termin suchen (falls vorhanden)
+            let bestehenderTermin = curId ? db.find(i => i.id === curId) : null;
+            
+            // 2. ID festlegen: Entweder die alte behalten oder JETZT SOFORT eine neue würfeln
+            let nId = bestehenderTermin && bestehenderTermin.notificationId 
+                      ? bestehenderTermin.notificationId 
+                      : Math.floor(Math.random() * 100000);
+
+            const obj = { 
+                id: curId || Date.now(), 
+                title, 
+                startDate: start, 
+                endDate: end, 
+                all: document.getElementById('m-all').checked, 
+                startTime: document.getElementById('m-time-start').value, 
+                endTime: document.getElementById('m-time-end').value, 
+                rep: document.getElementById('m-rep').value,
+                notificationId: nId // <-- Hier ist sie fest verankert!
+            };
+            
+            // 3. Sofort in der Live-Datenbank speichern
             if (curId) db = db.map(i => i.id === curId ? obj : i); else db.push(obj);
 
-            // ===========================================================================
-            // --- NEUE GLOBAL CORREKTE FUNKTION FÜR JEDEN TERMIN (NEU & IMPORT) ---
-            // ===========================================================================
-            async function planeNotificationFuerTermin(obj) {
-                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
-                    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
-                    try {
-                        // 1. Erstmalig nach Erlaubnis fragen (Apple-Popup triggern)
-                        let perm = await LocalNotifications.checkPermissions();
-                        if (perm.display !== 'granted') {
-                            perm = await LocalNotifications.requestPermissions();
-                        }
+            // 4. SOFORT IM LOCALSTORAGE SICHERN (Das bricht dem Bug das Genick!)
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
 
-                        if (perm.display === 'granted') {
-                            const timeStart = obj.all ? "09:00" : obj.startTime;
+       
 
-                            // Datum splitten, um den Zeitzonen-Bug zu umgehen
-                            const parts = obj.startDate.split('-');
-                            const timeParts = timeStart.split(':');
-
-                            // Lokale Zeit berechnen
-                            let notificationTime = new Date(parts[0], parts[1] - 1, parts[2], timeParts[0], timeParts[1]);
-
-                            // --- DYNAMISCHE MINUTEN ABZIEHEN (CRASH-SICHER) ---
-                            let minutesBefore = 120; // Standard: 2 Stunden vorher
-                            const menuElement = document.getElementById('reminderTime');
-                            if (menuElement) {
-                                minutesBefore = parseInt(menuElement.value) || 0;
-                            }
-
-                            // Minuten vom Termin abziehen
-                            notificationTime.setMinutes(notificationTime.getMinutes() - minutesBefore);
-                            // --------------------------------------------------
-
-                            // Sprache abfragen
-                            const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
-                            const notificationTitle = isEnglish ? "Upcoming Event" : "Anstehender Termin";
-
-                            // --- NEU: EINDEUTIGE ID GENERIEREN UND IM TERMIN SPEICHERN ---
-                            // Falls der Termin noch keine Notification-ID hat, erzeugen wir eine
-                            if (!obj.notificationId) {
-                                obj.notificationId = Math.floor(Math.random() * 100000);
-                            }
-                            // -------------------------------------------------------------
-
-                            // 2. Notification an iOS übergeben
-                            await LocalNotifications.schedule({
-                                notifications: [
-                                    {
-                                        title: notificationTitle,
-                                        body: obj.title,
-                                        id: obj.notificationId, // Nutzen die gespeicherte ID
-                                        schedule: { at: notificationTime },
-                                        sound: 'default'
-                                    }
-                                ]
-                            });
-
-                            // Falls du hiernach die DB speicherst, wird die notificationId im LocalStorage gesichert.
-                        }
-                    } catch (error) {
-                        console.error("Fehler bei den Notifications:", error);
-                    }
-                }
-            }
-
-            // --- DIESE FUNKTION LÖSCHT DIE NOTIFICATION BEI IOS ---
-            async function loescheNotificationFuerTermin(obj) {
-                if (!obj || !obj.notificationId) return;
-
-                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) {
-                    const LocalNotifications = window.Capacitor.Plugins.LocalNotifications;
-                    try {
-                        await LocalNotifications.cancel({
-                            notifications: [{ id: obj.notificationId }]
-                        });
-                        console.log("Notification gelöscht für ID:", obj.notificationId);
-                    } catch (error) {
-                        console.error("Fehler beim Löschen der Notification:", error);
-                    }
-                }
-            }
 
             // ===========================================================================
 
@@ -1558,7 +1701,17 @@
                 // ==========================================
 
                 // Ab hier läuft dein normales, verschlüsseltes Backup weiter
-                const rawData = JSON.stringify({ db, exceptions });
+// ==========================================
+// --- NEU: ALTE NOTIFICATION-IDS AUS DEM BACKUP ENTFERNEN ---
+const saubereDb = db.map(item => {
+    const kopie = { ...item };
+    delete kopie.notificationId; // Die ID fliegt nur aus dem Export-Text raus
+    return kopie;
+});
+// ===========================================================
+
+// Ab hier läuft dein normales, verschlüsseltes Backup weiter
+const rawData = JSON.stringify({ db: saubereDb, exceptions });
                 const verschluesselt = btoa(encodeURIComponent(rawData).replace(/%([0-9A-F]{2})/g, function (match, p1) {
                     return String.fromCharCode('0x' + p1);
                 }));
@@ -1571,39 +1724,40 @@
             }
         }
 
-        function copyB() { const el = document.getElementById('b-export'); el.select(); navigator.clipboard.writeText(el.value); alert("Kopiert!"); }
+async function importB() {
+    const text = document.getElementById('b-import').value.trim();
+    if (!text) return;
+  
+    
+    try {
+        // ... (Dein bisheriger Code zum Dekodieren bleibt exakt gleich!) ...
+        const klarText = decodeURIComponent(atob(text).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
 
-        // --- AUSSERDEM NEU: "async" VOR DIE FUNKTION ---
-        async function importB() {
-            const text = document.getElementById('b-import').value.trim();
-            if (!text) return;
-            if (!confirm("Alles überschreiben?")) return;
-            try {
-                const klarText = decodeURIComponent(atob(text).split('').map(function (c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-
-                const data = JSON.parse(klarText);
-                if (data.db) {
-                    localStorage.clear();
-
-                    // --- HIER DIE ALTEN WECKER LÖSCHEN (JETZT MIT AWAIT) ---
-                    if (typeof loescheAlleNotifications === 'function') {
-                        await loescheAlleNotifications();
-                    }
-                    // -------------------------------------------------------
-
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data.db));
-                    localStorage.setItem(EX_KEY, JSON.stringify(data.exceptions || []));
-
-                    localStorage.setItem('inf_needs_import_notifications', 'true');
-
-                    location.reload();
-                }
-            } catch (e) {
-                alert("Fehler! Das ist kein gültiges oder ein beschädigtes Backup.");
+        const data = JSON.parse(klarText);
+        
+        if (data.db) {
+            localStorage.clear();
+            if (typeof loescheAlleNotifications === 'function') {
+                await loescheAlleNotifications();
             }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data.db));
+            localStorage.setItem(EX_KEY, JSON.stringify(data.exceptions || []));
+
+            // HIER DIE ÄNDERUNG:
+            // Wir sagen dem User, er soll kurz warten, statt sofort zu planen
+        
+            
+            // Erst jetzt die Planung starten, mit einer winzigen Verzögerung
+            setTimeout(async () => {
+                await starteImportPlanung();
+            }, 5);
         }
+    } catch (e) {
+        alert("Error");
+    }
+}
 
         function downloadB() {
             try {
@@ -1638,7 +1792,7 @@
                             url: result.uri // Gibt den Pfad der Datei an iOS weiter
                         });
                     }).catch(function (err) {
-                        alert("Fehler beim Speichern auf iOS: " + err.message);
+                       
                     });
 
                 } else {
@@ -1659,8 +1813,8 @@
                 alert("Fehler beim Download: " + e.message);
             }
         }
-        async function clearAllData() {
-            if (confirm("Alles löschen?")) {
+async function clearAllData() {
+   
                 // 1. Zuerst alle Benachrichtigungen im iPhone-System löschen
                 await loescheAlleNotifications();
 
@@ -1670,7 +1824,7 @@
                 // 3. App frisch neu laden
                 location.reload();
             }
-        }
+        
 
 function showDeleteOptions() { 
     if (document.getElementById('m-rep').value !== 'none') {
@@ -1680,46 +1834,50 @@ function showDeleteOptions() {
     }
 }
         function hideDeleteOptions() { document.getElementById('m-del-confirm').style.display = 'none'; }
-        // WENN EINE GANZE SERIE GELÖSCHT WIRD (Hier bleibt das Neuladen)
-        async function delSerie() {
-            if (typeof loescheAlleNotifications === 'function') {
-                await loescheAlleNotifications();
-            }
+// WENN EINE GANZE SERIE GELÖSCHT WIRD (Hier bleibt das Neuladen)
+async function delSerie() {
+    // 1. Den passenden Serientermin in der DB suchen
+    const aktuelleSerie = db.find(i => i.id === curId);
 
-            db = db.filter(i => i.id !== curId);
-            silentFinalize();
+    // 2. Gezielt NUR den Wecker dieser einen Serie löschen
+    if (aktuelleSerie && typeof loescheNotificationFuerTermin === 'function') {
+        await loescheNotificationFuerTermin(aktuelleSerie);
+    }
 
-            localStorage.setItem('inf_needs_import_notifications', 'true');
-            location.reload(); // Ganze Serie -> Lädt neu
-        }
+    // 3. Serie aus der Datenbank entfernen
+    db = db.filter(i => i.id !== curId);
+    silentFinalize();
+
+    // --- DIE ZEILE MIT 'inf_needs_import_notifications' WURDE ENTFERNT ---
+    location.reload(); // Ganze Serie -> Lädt neu
+}
 
         // WENN EIN EINZELTERMIN ODER EIN SERIENELEMENT GELÖSCHT WIRD (Kein Neuladen!)
 
-        function delSingle() {
-            // 1. Den passenden Termin suchen
-            const aktuellerTermin = db.find(i => i.id === curId);
+   async function delSingle() {
+    // 1. Den passenden Termin suchen
+    const aktuellerTermin = db.find(i => i.id === curId);
 
-            // 2. Gegezielt NUR DIESEN EINEN Wecker auf dem iPhone löschen
-            if (aktuellerTermin && typeof loescheNotificationFuerTermin === 'function') {
-                loescheNotificationFuerTermin(aktuellerTermin);
-            }
+    // Prüfen anhand von .rep, ob es sich um eine Serie handelt
+    const istSerie = aktuellerTermin && aktuellerTermin.rep && aktuellerTermin.rep !== 'none';
 
-            // === DER FIX HIER ===
-            // Wir prüfen anhand von .rep (nicht .isSerie), ob es sich um eine Serie handelt!
-            const istSerie = aktuellerTermin && aktuellerTermin.rep && aktuellerTermin.rep !== 'none';
+// 2. Gezielt den Wecker löschen – ABER NUR WENN ES EIN EINZELTERMIN IST!
+    if (aktuellerTermin && !istSerie && typeof loescheNotificationFuerTermin === 'function') {
+        // --- NEU: HIER UNBEDINGT "await" DAZWISCHEN ---
+        await loescheNotificationFuerTermin(aktuellerTermin);
+    }
 
-            if (istSerie) {
-                // Es ist ein Serienelement -> Als Ausnahme eintragen (nur diesen Tag löschen)
-                exceptions.push(curId + '_' + curSelectedDate);
-            } else {
-                // Es ist ein ganz normaler Einzeltermin -> Komplett aus der Datenbank löschen
-                db = db.filter(i => i.id !== curId);
-            }
+    if (istSerie) {
+        // Es ist ein Serienelement -> Als Ausnahme eintragen (nur diesen Tag löschen)
+        exceptions.push(curId + '_' + curSelectedDate);
+    } else {
+        // Es ist ein ganz normaler Einzeltermin -> Komplett aus der Datenbank löschen
+        db = db.filter(i => i.id !== curId);
+    }
 
-            // 4. Im Hintergrund speichern und schießen
-            silentFinalize();
-        }
-        scroller.onscroll = () => { if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length - 1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); } };
+    // 4. Im Hintergrund speichern und schießen
+    silentFinalize();
+}        scroller.onscroll = () => { if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 800) { const l = loaded[loaded.length - 1].split('-'); renderMonth(parseInt(l[0]), parseInt(l[1])); } };
         init();
 
 
